@@ -18,8 +18,8 @@ class CreateBannerTable extends Migration
             $table->bigInteger("group");
             $table->string("title",128);
             $table->enum("show",["Yes","No"]);
-            $table->timestamp("start_date");
-            $table->timestamp("end_date");
+            $table->timestamp("start_date")->nullable();
+            $table->timestamp("end_date")->nullable();
             $table->timestamps();
         });
     }

@@ -21,12 +21,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string("code_meli",20);
-            $table->timestamp("birth");
+            $table->timestamp("birth")->nullable();
             $table->string("last_version",20)->nullable();
             $table->string("last_order",20)->nullable();
             $table->string("address",512);
             $table->string("whatsapp",20);
             $table->rememberToken();
+            $table->enum("roll",["Developer","Owner","Admin","Customer"]);
             $table->timestamps();
         });
     }
