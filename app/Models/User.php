@@ -20,6 +20,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        "moaref_id",
+        "code_meli",
+        "birth",
+        "last_version",
+        "last_order",
+        "address",
+        "phone",
+        "whatsapp",
+        "roll"
     ];
 
     /**
