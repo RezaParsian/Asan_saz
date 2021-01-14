@@ -24,5 +24,5 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/mig', function () {
-    return Artisan::call("migrate:fresh");
+    return Artisan::call("migrate:fresh --seed");
 });
