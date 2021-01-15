@@ -10,6 +10,7 @@ class SmsController extends Controller
 {
     public function SendSms(Request $request)
     {
+        $User = User::where("phone", $request->phone)->first();
         $randomcode = rand(10000, 99999);
 
         $curl = curl_init();
@@ -35,19 +36,26 @@ class SmsController extends Controller
         $result = json_decode($response, true);
 
         if ($result['result'] == "success") {
-            return array("status" => "success", "code" => $randomcode);
+            $name = explode(" ", $User->name)[0];
+            $fname = str_replace($name . " ", "", $User->name);
+            return array(
+                "status" => "success",
+                "name" => $name,
+                "fname" => $fname,
+                "code" => $randomcode
+            );
         } else {
             return array("status" => "failed");
         }
     }
     public function MakeUser(Request $request)
     {
-        $isUser=User::where("phone",$request->phone)->count();
+        $User = User::where("phone", $request->phone)->get();
 
-        if($isUser>0){
+        if (count($User) > 0) {
             return array(
-                "status"=>"failed",
-                "message"=>"شما قبلا ثبت نام کرده اید."
+                "status" => "failed",
+                "message" => "شما قبلا ثبت نام کرده اید."
             );
         }
 

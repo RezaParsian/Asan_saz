@@ -7,6 +7,8 @@ use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use function GuzzleHttp\Promise\settle;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,4 +29,12 @@ Route::post('/MakeUser', [SmsController::class,"MakeUser"])->name("api-makeuser"
 
 Route::post('/Setting', [SettingController::class,"Fetch"])->name("api-fetchsetting");
 Route::post('/Product', [ProductController::class,"Fetch"])->name("api-fetchsetting");
-Route::get('/Category', [CategoryController::class,"Fetch"])->name("api-fetchsetting");
+Route::Post('/Category', [CategoryController::class,"Fetch"])->name("api-fetchsetting");
+
+Route::post('/AllConfig', function(){
+    $setting=new SettingController;
+    $product=new ProductController;
+    $category=new CategoryController;
+
+    return array("setting"=>$setting->Fetch(),"product"=>$product->Fetch(),"category"=>$category->Fetch());
+})->name("api-fetchsetting");
