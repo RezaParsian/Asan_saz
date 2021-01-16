@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->bigInteger("moaref_id")->nullable();
             $table->string('name');
+            $table->string('fname')->nullable();
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

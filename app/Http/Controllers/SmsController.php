@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Egulias\EmailValidator\Warning\EmailTooLong;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,8 @@ class SmsController extends Controller
         $result = json_decode($response, true);
 
         if ($result['result'] == "success") {
-            $name = explode(" ", $User->name)[0];
-            $fname = str_replace($name . " ", "", $User->name);
+            $name = !empty($User) ? explode(" ", $User->name)[0] : '';
+            $fname = !empty($User) ? str_replace($name . " ", "", $User->name) : '';
             return array(
                 "status" => "success",
                 "name" => $name,
@@ -61,6 +62,7 @@ class SmsController extends Controller
 
         $user = User::create([
             "name" => $request->name,
+            "fname"=>$request->fname,
             "phone" => $request->phone,
             "whatsapp" => $request->phone,
         ]);
