@@ -49,20 +49,26 @@ class SmsController extends Controller
             return array("status" => "failed");
         }
     }
+
     public function MakeUser(Request $request)
     {
         $User = User::where("phone", $request->phone)->get();
 
         if (count($User) > 0) {
-            return array(
-                "status" => "failed",
-                "message" => "شما قبلا ثبت نام کرده اید."
+            $User[0]->update(
+                [
+                    "name" => $request->name,
+                    "fname" => $request->fname
+                ]
             );
+
+            $User[0]["status"] = "success";
+            return $User[0];
         }
 
         $user = User::create([
             "name" => $request->name,
-            "fname"=>$request->fname,
+            "fname" => $request->fname,
             "phone" => $request->phone,
             "whatsapp" => $request->phone,
         ]);
