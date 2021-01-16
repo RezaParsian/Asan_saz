@@ -63,7 +63,7 @@ class SmsController extends Controller
             );
 
             $User[0]["status"] = "success";
-            return $User[0];
+            return $User[0]->only(["id","name","fname","status"]);
         }
 
         $user = User::create([
@@ -73,6 +73,6 @@ class SmsController extends Controller
             "whatsapp" => $request->phone,
         ]);
         $user["status"] = "success";
-        return $user;
+        return $user->only(["id","name","fname","status"]);
     }
 }
