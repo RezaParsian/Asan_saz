@@ -37,8 +37,8 @@ class SmsController extends Controller
         $result = json_decode($response, true);
 
         if ($result['result'] == "success") {
-            $name = !empty($User) ? explode(" ", $User->name)[0] : '';
-            $fname = !empty($User) ? str_replace($name . " ", "", $User->name) : '';
+            $name = !empty($User) ? $User->name : '';
+            $fname = !empty($User) ? $User->fname : '';
             return array(
                 "status" => "success",
                 "name" => $name,
