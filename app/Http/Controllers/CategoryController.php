@@ -9,7 +9,7 @@ class CategoryController extends Controller
 {
     public function Fetch()
     {
-        $setting=Category::get();
+        $setting=Category::orderby("olaviyat","ASC")->get();
         return $setting;
     }
 }

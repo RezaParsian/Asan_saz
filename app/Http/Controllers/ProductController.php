@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function Fetch()
     {
-        $product=Product::get();
+        $product=Product::orderby("olaviyat","ASC")->get();
         return $product;
     }
 }
