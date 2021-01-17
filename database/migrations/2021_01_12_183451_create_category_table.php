@@ -15,6 +15,7 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("parent");
             $table->string("title",128);
             $table->string("img",50);
             $table->enum("show",["Yes","No"]);
