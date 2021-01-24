@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Profile;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
@@ -20,21 +21,25 @@ use function GuzzleHttp\Promise\settle;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => ''], function () {
+    Route::post('/SendSms', [SmsController::class, "SendSms"])->name("api-sendsms");
+    Route::post('/MakeUser', [SmsController::class, "MakeUser"])->name("api-makeuser");
 });
 
-Route::post('/SendSms', [SmsController::class,"SendSms"])->name("api-sendsms");
-Route::post('/MakeUser', [SmsController::class,"MakeUser"])->name("api-makeuser");
+Route::group(['prefix' => ''], function () {
+    Route::post('/Setting', [SettingController::class, "Fetch"])->name("api-fetchsetting");
+    Route::post('/Product', [ProductController::class, "Fetch"])->name("api-fetchproduct");
+    Route::Post('/Category', [CategoryController::class, "Fetch"])->name("api-fetchscategory");
 
-Route::post('/Setting', [SettingController::class,"Fetch"])->name("api-fetchsetting");
-Route::post('/Product', [ProductController::class,"Fetch"])->name("api-fetchsetting");
-Route::Post('/Category', [CategoryController::class,"Fetch"])->name("api-fetchsetting");
+    Route::match(['get', 'post'], '/AllConfig', function () {
+        $setting = new SettingController;
+        $product = new ProductController;
+        $category = new CategoryController;
 
-Route::post('/AllConfig', function(){
-    $setting=new SettingController;
-    $product=new ProductController;
-    $category=new CategoryController;
+        return array("setting" => $setting->Fetch(), "product" => $product->Fetch(), "category" => $category->Fetch());
+    })->name("api-fetchsetting");
+});
 
-    return array("setting"=>$setting->Fetch(),"product"=>$product->Fetch(),"category"=>$category->Fetch());
-})->name("api-fetchsetting");
+Route::group(['prefix' => 'user'], function () {
+    Route::post("/profile/{id}", [Profile::class, "Profile@update"])->name("profile.update");
+});
