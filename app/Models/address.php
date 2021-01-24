@@ -13,6 +13,7 @@ class address extends Model
         "regenID",
         "title",
         "address",
-        "location"
+        "location",
+        "show"
     ];
 }

@@ -20,6 +20,7 @@ class CreateAddressesTable extends Migration
             $table->string("title",68);
             $table->text("address");
             $table->string("location");
+            $table->enum("show",["Yes","No"])->default("Yes");
             $table->timestamps();
         });
     }

@@ -37,7 +37,7 @@ class AddressController extends Controller
      */
     public function show($address)
     {
-        return address::where("userID",$address)->get();
+        return address::where("userID",$address)->where("show","Yes")->get();
     }
 
     /**
@@ -63,7 +63,7 @@ class AddressController extends Controller
     public function destroy($address)
     {
         $ads=address::findOrFail($address);
-        $ads->delete();
+        $ads->update(["show"=>"No"]);
         return $ads;
     }
 }
