@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class Profile extends Controller
 {
@@ -45,9 +47,11 @@ class Profile extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $profile)
     {
-        //
+        $user=User::findOrFail($profile);
+        $user->update($request->all());
+        return $user;
     }
 
     /**

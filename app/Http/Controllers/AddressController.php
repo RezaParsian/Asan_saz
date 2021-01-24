@@ -25,7 +25,8 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $address=address::create($request->all());
+        return $address;
     }
 
     /**
@@ -34,9 +35,9 @@ class AddressController extends Controller
      * @param  \App\Models\address  $address
      * @return \Illuminate\Http\Response
      */
-    public function show(address $address)
+    public function show($address)
     {
-        //
+        return address::where("userID",$address)->get();
     }
 
     /**
@@ -46,9 +47,11 @@ class AddressController extends Controller
      * @param  \App\Models\address  $address
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, address $address)
+    public function update(Request $request,$address)
     {
-        //
+        $ads=address::findOrFail($address);
+        $ads->update($request->all());
+        return $ads;
     }
 
     /**
@@ -57,8 +60,10 @@ class AddressController extends Controller
      * @param  \App\Models\address  $address
      * @return \Illuminate\Http\Response
      */
-    public function destroy(address $address)
+    public function destroy($address)
     {
-        //
+        $ads=address::findOrFail($address);
+        $ads->delete();
+        return $ads;
     }
 }

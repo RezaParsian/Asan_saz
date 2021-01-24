@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile;
@@ -40,6 +41,5 @@ Route::group(['prefix' => ''], function () {
     })->name("api-fetchsetting");
 });
 
-Route::group(['prefix' => 'user'], function () {
-    Route::post("/profile/{id}", [Profile::class, "Profile@update"])->name("profile.update");
-});
+Route::resource("user/profile", Profile::class);
+Route::resource('user/address', AddressController::class);
