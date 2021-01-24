@@ -26,7 +26,6 @@ class User extends Authenticatable
         "birth",
         "last_version",
         "last_order",
-        "address",
         "phone",
         "whatsapp",
         "roll"
