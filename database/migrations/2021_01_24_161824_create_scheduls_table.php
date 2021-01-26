@@ -15,9 +15,9 @@ class CreateSchedulsTable extends Migration
     {
         Schema::create('scheduls', function (Blueprint $table) {
             $table->id();
-            $table->time("from");
-            $table->time("to");
-            $table->enum("show",["Yes","No"]);
+            $table->time("from")->nullable();
+            $table->time("to")->nullable();
+            $table->enum("show",["Yes","No"])->nullable();
             $table->timestamps();
         });
     }

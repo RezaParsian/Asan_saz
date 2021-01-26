@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("productID")->nullable();
             $table->bigInteger("userID")->nullable();
-            $table->bigInteger("factorID")->nullable();
-            $table->integer("count")->nullable();
-            $table->string("status",64)->nullable();
+            $table->enum("kind",["Criticism","Suggestion"])->nullable();
+            $table->text("dec")->nullable();
+            $table->text("respone")->nullable();
+            $table->enum("status",["Notsee","See","Wait"])->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('comments');
     }
 }

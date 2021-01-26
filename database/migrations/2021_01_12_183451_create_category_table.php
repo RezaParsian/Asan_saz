@@ -15,11 +15,11 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("parent");
-            $table->string("title",128);
-            $table->string("img",50);
-            $table->enum("show",["Yes","No"]);
-            $table->integer("olaviyat");
+            $table->bigInteger("parent")->nullable();
+            $table->string("title",128)->nullable();
+            $table->string("img",50)->nullable();
+            $table->enum("show",["Yes","No"])->nullable();
+            $table->integer("olaviyat")->nullable();
             $table->timestamps();
         });
     }

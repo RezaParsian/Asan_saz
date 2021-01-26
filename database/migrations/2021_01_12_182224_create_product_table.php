@@ -15,17 +15,18 @@ class CreateProductTable extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("category");
-            $table->string("title",128);
-            $table->enum("action",["one_click","pay"]);
-            $table->bigInteger("price");
-            $table->integer("max");
-            $table->text("des");
-            $table->string("img",50);
-            $table->json("gallery",50);
-            $table->enum("show",["Yes","No"]);
-            $table->integer("olaviyat");
-            $table->enum("highrate",["Yes","No"]);
+            $table->bigInteger("category")->nullable();
+            $table->string("title",128)->nullable();
+            $table->enum("action",["one_click","pay"])->nullable();
+            $table->bigInteger("buyprice")->nullable();
+            $table->bigInteger("price")->nullable();
+            $table->integer("max")->nullable();
+            $table->text("des")->nullable();
+            $table->string("img",50)->nullable();
+            $table->json("gallery",50)->nullable();
+            $table->enum("show",["Yes","No"])->nullable();
+            $table->integer("olaviyat")->nullable();
+            $table->enum("highrate",["Yes","No"])->nullable();
             $table->timestamps();
         });
     }
