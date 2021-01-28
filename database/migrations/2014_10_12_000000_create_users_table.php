@@ -15,7 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("moaref_id")->nullable();
+            $table->bigInteger("moarefID")->nullable();
+            $table->bigInteger("regionID")->nullable();
             $table->string('name');
             $table->string('fname')->nullable();
             $table->string('email')->nullable()->unique();
@@ -30,7 +31,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->enum("roll", ["Developer", "Owner", "Admin", "Operator", "Supplier", "Courier Manager", "Delivery", "Customer"])->default("Customer");
             $table->enum("special", ["Yes", "No"])->nullable();
-            $table->string("region", 64)->nullable();
             $table->string("codeposti", 24)->nullable();
             $table->enum("sex", ["IDK", "Men", "Women"])->default("IDK");
             $table->string("pushid", 124)->nullable();

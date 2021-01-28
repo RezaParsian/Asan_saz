@@ -15,7 +15,7 @@ class CreateProductTable extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("category")->nullable();
+            $table->bigInteger("CategoryID")->nullable();
             $table->string("title",128)->nullable();
             $table->enum("action",["one_click","pay"])->nullable();
             $table->bigInteger("buyprice")->nullable();
