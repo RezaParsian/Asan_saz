@@ -7,11 +7,8 @@ use App\Http\Controllers\Profile;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
-
-use function GuzzleHttp\Promise\settle;
 
 /*
 |--------------------------------------------------------------------------
