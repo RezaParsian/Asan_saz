@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile;
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
@@ -43,3 +44,4 @@ Route::group(['prefix' => ''], function () {
 
 Route::resource("user/profile", Profile::class);
 Route::resource('user/address', AddressController::class);
+Route::resource('region', RegionController::class);
