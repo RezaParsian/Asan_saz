@@ -10,10 +10,15 @@ class address extends Model
     use HasFactory;
     protected $fillable = [
         "userID",
-        "regenID",
+        "regionID",
         "title",
         "address",
         "location",
         "show"
     ];
+
+    public function Region()
+    {
+        return $this->hasOne(region::class,"id","regionID");
+    }
 }

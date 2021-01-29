@@ -37,7 +37,7 @@ class AddressController extends Controller
      */
     public function show($address)
     {
-        return address::where("userID",$address)->where("show","Yes")->get();
+        return address::where("userID",$address)->where("show","Yes")->with("Region")->get();
     }
 
     /**

@@ -23,6 +23,6 @@ Route::get('/', function () {
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/mig', function () {
-    return Artisan::call("migrate:fresh --seed");
-});
+// Route::get('/mig', function () {
+//     return Artisan::call("migrate:fresh --seed");
+// });
