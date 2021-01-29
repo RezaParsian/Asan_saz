@@ -9,6 +9,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Hekmatinasser\Verta\Verta;
 
 use function GuzzleHttp\Promise\settle;
 
@@ -34,11 +35,14 @@ Route::group(['prefix' => ''], function () {
     Route::Post('/Category', [CategoryController::class, "Fetch"])->name("api-fetchscategory");
 
     Route::match(['get', 'post'], '/AllConfig', function () {
+        $time=new Verta();
+        $time=$time->formatWord('l').$time->format('%d %B %Y');
+
         $setting = new SettingController;
         $product = new ProductController;
         $category = new CategoryController;
 
-        return array("setting" => $setting->Fetch(), "product" => $product->Fetch(), "category" => $category->Fetch());
+        return array("setting" => $setting->Fetch(), "product" => $product->Fetch(), "category" => $category->Fetch(),"time"=>$time);
     })->name("api-fetchsetting");
 });
 
