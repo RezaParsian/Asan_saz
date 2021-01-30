@@ -14,7 +14,7 @@ class TimingController extends Controller
      */
     public function index()
     {
-        //
+        return Timing::get();
     }
 
     /**

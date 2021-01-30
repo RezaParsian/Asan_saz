@@ -8,6 +8,7 @@ use App\Http\Controllers\Profile;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
+use App\Http\Controllers\TimingController;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
 
@@ -48,3 +49,4 @@ Route::resource("user/profile", Profile::class);
 Route::resource('user/address', AddressController::class);
 Route::resource('region', RegionController::class);
 Route::resource('banner', BannerController::class);
+Route::resource('timings', TimingController::class);
