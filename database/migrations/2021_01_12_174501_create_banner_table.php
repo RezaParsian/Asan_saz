@@ -16,6 +16,7 @@ class CreateBannerTable extends Migration
         Schema::create('banner', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("BannergpsID")->nullable();
+            $table->string("img",50)->nullable();
             $table->string("title",128)->nullable();
             $table->enum("show",["Yes","No"])->nullable();
             $table->enum("linkable",["Yes","No"])->nullable();

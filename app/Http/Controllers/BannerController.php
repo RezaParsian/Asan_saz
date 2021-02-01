@@ -14,7 +14,13 @@ class BannerController extends Controller
      */
     public function index()
     {
-        return banner::get();
+        return banner::where(
+            [
+                ["show", "=", "Yes"],
+                ["start_date", "<", date("Y-m-d J:i:s")],
+                ["end_date", ">", date("Y-m-d J:i:s")],
+            ]
+        )->get();
     }
 
     /**

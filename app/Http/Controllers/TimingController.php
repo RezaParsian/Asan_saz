@@ -7,14 +7,38 @@ use Illuminate\Http\Request;
 
 class TimingController extends Controller
 {
+    private $today,$tomorrow;
+    private $days = [
+        "شنبه",
+        "یکشنبه",
+        "دوشنبه",
+        "سه شنبه",
+        "چهار شنبه",
+        "پنج شنبه",
+        "جمعه",
+    ];
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->today = verta()->formatWord('l');
+        $dayid=array_search($this->today,$this->days)<=5  ? array_search($this->today,$this->days)+1 : 0;
+        $this->tomorrow=$this->days[$dayid];
+    }
+
     public function index()
     {
-        return Timing::get();
+        return Timing::where(
+            [
+                ["show", "=", "Yes"],
+                ["type", "=", $this->today],
+                ["fromdate", "<", verta()->format("h")],
+                ["todate", ">", verta()->format("h")],
+            ]
+        )->orwhere("title", "فوری")->orwhere("type",$this->tomorrow)->get();
     }
 
     /**

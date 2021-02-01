@@ -34,14 +34,21 @@ Route::group(['prefix' => ''], function () {
     Route::Post('/Category', [CategoryController::class, "Fetch"])->name("api-fetchscategory");
 
     Route::match(['get', 'post'], '/AllConfig', function () {
-        $time=new Verta();
-        $time=$time->formatWord('l').$time->format('%d %B %Y');
+        $time = new Verta();
+        $now = $time->formatWord('l ') . $time->format('%d %B %Y');
 
         $setting = new SettingController;
         $product = new ProductController;
         $category = new CategoryController;
 
-        return array("setting" => $setting->Fetch(), "product" => $product->Fetch(), "category" => $category->Fetch(),"time"=>$time);
+        return array(
+            "setting" => $setting->Fetch(),
+            "product" => $product->Fetch(),
+            "category" => $category->Fetch(),
+            "time" => $now,
+            "today"=>$time->format("%d %B"),
+            "tomorrow"=>($time->format("%d")+1)." ".$time->format("%B")
+        );
     })->name("api-fetchsetting");
 });
 
