@@ -8,7 +8,7 @@ use PhpParser\Node\Expr\AssignOp\Concat;
 
 class TimingController extends Controller
 {
-    private $today,$tomorrow;
+    private $today, $tomorrow;
     private $days = [
         'شنبه',
         'یکشنبه',
@@ -26,30 +26,33 @@ class TimingController extends Controller
     public function __construct()
     {
         $this->today = verta()->formatWord('l');
-        $dayid=array_search($this->today,$this->days)<=6  ? array_search($this->today,$this->days)+1 : 0;
-        $this->tomorrow=$this->days[$dayid];
+        $dayid = array_search($this->today, $this->days) <= 6  ? array_search($this->today, $this->days) + 1 : 0;
+        $this->tomorrow = $this->days[$dayid];
     }
 
     public function index()
     {
-        $today=Timing::where(
+        $today = Timing::where(
             [
                 ["type", "=", $this->today],
                 ["fromdate", ">", verta()->format("h")],
-                ["todate", "<", verta()->format("h")],
                 ["show", "=", "Yes"],
             ]
-        )->orwhere("title", "فوری")->get();
+        )->orwhere(
+            [
+                ["title", "=", "فوری"],
+                ["todate", "<", verta()->format("h")],
+            ]
+        )->get();
 
-        $tomorrow=Timing::where(
+        $tomorrow = Timing::where(
             [
                 ["type", "=", $this->tomorrow],
                 ["show", "=", "Yes"],
             ]
         )->orwhere("title", "فوری")->get();
 
-        return compact("today","tomorrow");
-
+        return compact("today", "tomorrow");
     }
 
     /**
