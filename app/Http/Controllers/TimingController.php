@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Timing;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\AssignOp\Concat;
 
 class TimingController extends Controller
 {
     private $today,$tomorrow;
     private $days = [
-        "شنبه",
-        "یکشنبه",
-        "دوشنبه",
-        "سه شنبه",
-        "چهار شنبه",
-        "پنج شنبه",
-        "جمعه",
+        'شنبه',
+        'یکشنبه',
+        'دوشنبه',
+        'سه شنبه',
+        'چهارشنبه',
+        'پنج شنبه',
+        'جمعه',
     ];
     /**
      * Display a listing of the resource.
@@ -25,20 +26,30 @@ class TimingController extends Controller
     public function __construct()
     {
         $this->today = verta()->formatWord('l');
-        $dayid=array_search($this->today,$this->days)<=5  ? array_search($this->today,$this->days)+1 : 0;
+        $dayid=array_search($this->today,$this->days)<=6  ? array_search($this->today,$this->days)+1 : 0;
         $this->tomorrow=$this->days[$dayid];
     }
 
     public function index()
     {
-        return Timing::where(
+        $today=Timing::where(
             [
-                ["show", "=", "Yes"],
                 ["type", "=", $this->today],
-                ["fromdate", "<", verta()->format("h")],
-                ["todate", ">", verta()->format("h")],
+                ["fromdate", ">", verta()->format("h")],
+                ["todate", "<", verta()->format("h")],
+                ["show", "=", "Yes"],
             ]
-        )->orwhere("title", "فوری")->orwhere("type",$this->tomorrow)->get();
+        )->orwhere("title", "فوری")->get();
+
+        $tomorrow=Timing::where(
+            [
+                ["type", "=", $this->tomorrow],
+                ["show", "=", "Yes"],
+            ]
+        )->orwhere("title", "فوری")->get();
+
+        return compact("today","tomorrow");
+
     }
 
     /**
