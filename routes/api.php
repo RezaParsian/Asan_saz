@@ -3,14 +3,18 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TimingController;
+use App\Http\Helper\Rp76;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
+use PhpParser\Node\Stmt\Return_;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,3 +61,9 @@ Route::resource('user/address', AddressController::class);
 Route::resource('region', RegionController::class);
 Route::resource('banner', BannerController::class);
 Route::resource('timings', TimingController::class);
+Route::resource('order', OrderController::class);
+
+Route::get('idk', function () {
+    $rp = new Rp76;
+    return $rp->NewFactor(1,"Salam");
+});

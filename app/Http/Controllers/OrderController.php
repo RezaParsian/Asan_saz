@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helper\Rp76;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,23 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = json_decode($request->getContent(), true);
+
+        $rp = new Rp76;
+        $id = $rp->NewFactor($data[0]["userID"], $data[0]["dec"])->id;
+        $status="waiting";
+
+        foreach ($data as $key) {
+            unset($key["dec"]);
+            $key["factorID"] = $id;
+            $key["status"]=$status;
+            $key["tuserID"]=-1;
+            Order::create($key);
+        }
+        return array(
+            "status"=>"success",
+            "msg"=>"سفارشات شما با موفقیت ثبت شدند."
+        );
     }
 
     /**
