@@ -35,13 +35,13 @@ class TimingController extends Controller
         $today = Timing::where(
             [
                 ["type", "=", $this->today],
-                ["fromdate", ">", verta()->format("h")],
+                ["fromdate", ">", verta()->format("H")],
                 ["show", "=", "Yes"],
             ]
         )->orwhere(
             [
                 ["title", "=", "فوری"],
-                ["todate", "<", verta()->format("h")],
+                ["todate", "<", verta()->format("H")],
             ]
         )->get();
 
@@ -50,7 +50,7 @@ class TimingController extends Controller
                 ["type", "=", $this->tomorrow],
                 ["show", "=", "Yes"],
             ]
-        )->orwhere("title", "فوری")->get();
+        )->get();
 
         return compact("today", "tomorrow");
     }
