@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ env('APP_NAME') }} - @yield('extitle')</title>
+    <title>{{ env('APP_NAME') }} - @yield('ex-title')</title>
     <script src="{{asset('assets/js/jquery.js')}}"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <!-- Favicon -->

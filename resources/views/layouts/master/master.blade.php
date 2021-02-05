@@ -4,7 +4,7 @@
 
 <!-- begin::Main -->
 <main class="main-content">
-    @yield('content')
+    @yield('body')
 </main>
 <!-- end::Main -->
 

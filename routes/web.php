@@ -19,6 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(["register"=>true]);
+Auth::routes(["register"=>false]);
 
-Route::get('/dash', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
