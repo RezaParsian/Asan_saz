@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth::routes();
+Auth::routes(["register"=>true]);
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::get('/mig', function () {
-//     return Artisan::call("migrate:fresh --seed");
-// });
+Route::get('/dash', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
