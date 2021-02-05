@@ -2,7 +2,9 @@
 
 namespace App\Http\Helper;
 
+use App\Models\address;
 use App\Models\Factor;
+use App\Models\region;
 
 class Rp76
 {
@@ -11,16 +13,20 @@ class Rp76
      * @param get a user id
      * @return row id
      */
-    public function NewFactor($userid,$dec)
+    public function NewFactor($userid,$dec,$basketprice,$addressid)
     {
+        $address=address::find($addressid);
+        $region=region::find($address->id);
+        $rent=$region->rent;
+
         $a = Factor::create([
             "userID" => $userid,
             "ouserID" => -1,
             "tuserID" => -1,
             "puserID" => -1,
             "addressID" => -1,
-            "totalprice" => null,
-            "peykprice" => null,
+            "totalprice" => $basketprice,
+            "peykprice" => $rent,
             "comision" => null,
             "recive" => null,
             "userdes" => $dec,

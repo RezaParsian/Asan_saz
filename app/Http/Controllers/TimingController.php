@@ -26,7 +26,7 @@ class TimingController extends Controller
     public function __construct()
     {
         $this->today = verta()->formatWord('l');
-        $dayid = array_search($this->today, $this->days) <= 6  ? array_search($this->today, $this->days) + 1 : 0;
+        $dayid = array_search($this->today, $this->days) < 6  ? array_search($this->today, $this->days) + 1 : 0;
         $this->tomorrow = $this->days[$dayid];
     }
 

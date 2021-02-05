@@ -39,14 +39,14 @@ class OrderController extends Controller
         $data = json_decode($request->getContent(), true);
 
         $rp = new Rp76;
-        $id = $rp->NewFactor($data[0]["userID"], $data[0]["dec"])->id;
+        $id = $rp->NewFactor($data["userID"], $data["dec"],$data["basketprice"],$data['addressID'])->id;
         $status="waiting";
 
-        foreach ($data as $key) {
+        foreach ($data['products'] as $key) {
             unset($key["dec"]);
             $key["factorID"] = $id;
             $key["status"]=$status;
-            $key["tuserID"]=-1;
+            $key["userID"]=$data["userID"];
             Order::create($key);
         }
         return array(
