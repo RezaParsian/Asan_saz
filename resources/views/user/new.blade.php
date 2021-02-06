@@ -5,18 +5,40 @@
 @section('body')
     <div class="card">
         <div class="card-body">
-            <form class="col">
+            @if (!empty(session()->get('msg')))
+                <div class="alert alert-success">
+                    {{ session()->get('msg') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $item)
+                            <li>{{ $item }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form class="col" method="POST" action="{{ route('user.store') }}">
+                @csrf
                 <div class="form-group row">
                     <div class="col">
                         <label>معرف</label>
                         <select name="moarefID" id="moarefID" class="form-control">
                             <option value="-1">یک معرف انتخاب کنید</option>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }} {{ $user->fname }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col">
                         <label>منطقه</label>
                         <select name="regionID" id="regionID" class="form-control">
                             <option value="-1">یک منطقه انتخاب کنید</option>
+                            @foreach ($regions as $region)
+                                <option value="{{ $region->id }}">{{ $region->title }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -24,33 +46,39 @@
                 <div class="form-group row">
                     <div class="col">
                         <label>نام</label>
-                        <input type="text" name="name" class="form-control text-left" placeholder="نام">
+                        <input type="text" name="name" class="form-control text-left" placeholder="نام" required
+                            value="{{ old('name') }}">
                     </div>
                     <div class="col">
                         <label>نام خانوادگی</label>
-                        <input type="text" name="fname" class="form-control text-left" placeholder="نام خانوادگی">
+                        <input type="text" name="fname" class="form-control text-left" placeholder="نام خانوادگی" required
+                            value="{{ old('fname') }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col">
                         <label>ایمیل</label>
-                        <input type="text" name="email" class="form-control text-left" placeholder="ایمیل">
+                        <input type="text" name="email" class="form-control text-left" placeholder="ایمیل"
+                            value="{{ old('email') }}">
                     </div>
                     <div class="col">
                         <label>گذرواژه</label>
-                        <input type="password" name="password" class="form-control text-left" placeholder="گذرواژه">
+                        <input type="password" name="password" class="form-control text-left" placeholder="گذرواژه"
+                            value="{{ old('password') }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col">
                         <label>کدملی</label>
-                        <input type="text" name="code_meli" class="form-control text-left" placeholder="کدملی">
+                        <input type="text" name="code_meli" class="form-control text-left" placeholder="کدملی" required
+                            value="{{ old('code_meli') }}">
                     </div>
                     <div class="col">
                         <label>شماره تلفن</label>
-                        <input type="text" name="phone" class="form-control text-left" placeholder="شماره تلفن">
+                        <input type="text" name="phone" class="form-control text-left" placeholder="شماره تلفن" required
+                            value="{{ old('phone') }}">
                     </div>
                 </div>
 
@@ -90,8 +118,8 @@
                         <label>نوع تامین کننده</label>
                         <select name="taminkind" id="taminkind" class="form-control">
                             <option value="IDK" selected>نامعلوم</option>
-                            <option value="Static" selected>ثابت</option>
-                            <option value="Dynamic" selected>سیار</option>
+                            <option value="Static">ثابت</option>
+                            <option value="Dynamic">سیار</option>
                         </select>
                     </div>
                 </div>

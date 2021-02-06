@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\region;
+use App\Models\User as ModelsUser;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class user extends Controller
 {
@@ -24,7 +28,9 @@ class user extends Controller
      */
     public function create()
     {
-        return view("user.new");
+        $users=ModelsUser::get();
+        $regions=region::get();
+        return view("user.new",compact("users","regions"));
     }
 
     /**
@@ -35,7 +41,15 @@ class user extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate=$request->validate([
+            "name"=>"required|min:3",
+            "fname"=>"required|min:3",
+            "code_meli"=>"required|min:10",
+            "phone"=>"required|min:11",
+        ]);
+
+        ModelsUser::create($request->all());
+        return back()->with("msg","کاربر با موفقیت ثبت شد.");
     }
 
     /**

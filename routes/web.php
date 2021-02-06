@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//$2y$10$fylVBEOWebrdUGnnvcTH5eY2mkzSRBE2ft3L.tXCPYU1c7cLhAj32
 Route::get('/', function () {
     return view('welcome');
 });
