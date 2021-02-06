@@ -13,18 +13,20 @@ class Rp76
      * @param get a user id
      * @return row id
      */
-    public function NewFactor($userid,$dec,$basketprice,$addressid)
+    public function NewFactor($userid, $dec, $basketprice, $addressid, $rent,$timingID,$Rddate)
     {
-        $address=address::find($addressid);
-        $region=region::find($address->id);
-        $rent=$region->rent;
+        // $address=address::find($addressid);
+        // $region=region::find($address->id);
+        // $rent=$region->rent;
+        $date=array("emroz"=>date("Y-m-d H:i:s"),"farda"=>date("Y-m-d H:i:s", strtotime('tomorrow')));
 
         $a = Factor::create([
             "userID" => $userid,
             "ouserID" => -1,
             "tuserID" => -1,
             "puserID" => -1,
-            "addressID" => -1,
+            "addressID" => $addressid,
+            "timingID" => $timingID,
             "totalprice" => $basketprice,
             "peykprice" => $rent,
             "comision" => null,
@@ -36,6 +38,7 @@ class Rp76
             "peykratedes" => null,
             "peykrecive" => null,
             "delevry" => null,
+            "Rddate" => $date[$Rddate],
             "status" => "waiting",
             "bale" => "No",
         ]);

@@ -14,6 +14,7 @@ class Factor extends Model
         "tuserID",
         "puserID",
         "addressID",
+        "timingID",
         "totalprice",
         "peykprice",
         "comision",
@@ -25,6 +26,7 @@ class Factor extends Model
         "peykratedes",
         "peykrecive",
         "delevry",
+        "Rddate",
         "status",
         "bale",
     ];

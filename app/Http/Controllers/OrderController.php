@@ -39,19 +39,29 @@ class OrderController extends Controller
         $data = json_decode($request->getContent(), true);
 
         $rp = new Rp76;
-        $id = $rp->NewFactor($data["userID"], $data["dec"],$data["basketprice"],$data['addressID'])->id;
-        $status="waiting";
+
+        $id = $rp->NewFactor(
+            $data["userID"],
+            $data["dec"],
+            $data["basketprice"],
+            $data['addressID'],
+            $data['rent'],
+            $data['timingID'],
+            $data['Rddate']
+        )->id;
+
+        $status = "waiting";
 
         foreach ($data['products'] as $key) {
             unset($key["dec"]);
             $key["factorID"] = $id;
-            $key["status"]=$status;
-            $key["userID"]=$data["userID"];
+            $key["status"] = $status;
+            $key["userID"] = $data["userID"];
             Order::create($key);
         }
         return array(
-            "status"=>"success",
-            "msg"=>"سفارشات شما با موفقیت ثبت شدند."
+            "status" => "success",
+            "msg" => "سفارشات شما با موفقیت ثبت شدند."
         );
     }
 
