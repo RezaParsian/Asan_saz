@@ -30,5 +30,13 @@
     "open":"باز",
     "close":"بسته",
     "success":"ارسال موفق",
-    "danger":"ارسال ناموفق"
+    "danger":"ارسال ناموفق",
+    "Developer":"توسعه دهنده",
+    "Owner":"مالک",
+    "Admin":"مدیر",
+    "Operator":"اپراتور",
+    "Supplier":"تامین کننده",
+    "Courier Manager":"مدیر پیک",
+    "Delivery":"پیک",
+    "Customer":"مشتری"
 }

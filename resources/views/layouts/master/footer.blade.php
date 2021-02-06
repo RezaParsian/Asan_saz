@@ -8,5 +8,6 @@
 <script src="{{asset('assets/js/examples/tagsinput.js')}}"></script>
 <!-- App scripts -->
 <script src="{{asset('assets/js/app.js')}}"></script>
+@yield('ex-js')
 </body>
 </html>

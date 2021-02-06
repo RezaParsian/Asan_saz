@@ -15,9 +15,6 @@ class Rp76
      */
     public function NewFactor($userid, $dec, $basketprice, $addressid, $rent,$timingID,$Rddate)
     {
-        // $address=address::find($addressid);
-        // $region=region::find($address->id);
-        // $rent=$region->rent;
         $date=array("Today"=>date("Y-m-d H:i:s"),"Tomorrow"=>date("Y-m-d H:i:s", strtotime('tomorrow')));
 
         $a = Factor::create([

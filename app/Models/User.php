@@ -17,18 +17,33 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'moarefID',
+        'regionID',
+        'defaultaid',
         'name',
         'fname',
         'email',
         'password',
-        "moaref_id",
-        "code_meli",
-        "birth",
-        "last_version",
-        "last_order",
-        "phone",
-        "whatsapp",
-        "roll"
+        'code_meli',
+        'birth',
+        'last_version',
+        'last_order',
+        'phone',
+        'whatsapp',
+        'roll',
+        'special',
+        'codeposti',
+        'sex',
+        'pushid',
+        'block',
+        'taminkind',
+        'img ',
+        'location',
+        'bank',
+        'state',
+        'vehicle',
+        'comision',
+
     ];
 
     /**
@@ -49,4 +64,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function Address()
+    {
+        return $this->hasMany(address::class,"userID","id");
+    }
 }
