@@ -25,8 +25,8 @@
 
         <div class="navigation-menu-body">
             <ul id="navigationDashboards" class="{{Menu::SetActive("dashboard")}}">
-                <li><a class="{{Menu::SetActive("dashboard")}}" href="#">صفحه نخست</a></li>
-                <li><a  href="#">ایجاد کاربر</a></li>
+                <li><a class="{{Menu::SetActive("dashboard")}}" href="{{route("home")}}">صفحه نخست</a></li>
+                <li><a  href="{{route("user.create")}}">ایجاد کاربر</a></li>
             </ul>
         </div>
 </div>

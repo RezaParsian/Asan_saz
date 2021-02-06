@@ -62,8 +62,3 @@ Route::resource('region', RegionController::class);
 Route::resource('banner', BannerController::class);
 Route::resource('timings', TimingController::class);
 Route::resource('order', OrderController::class);
-
-Route::get('idk', function () {
-    $rp = new Rp76;
-    return $rp->NewFactor(1,"Salam");
-});
