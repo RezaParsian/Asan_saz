@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Helper\Rp76;
+use App\Models\Factor;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,9 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Factor::where("userID",$request->id)->orderby("id","desc")->get();
     }
 
     /**
@@ -71,9 +72,9 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($order)
     {
-        //
+        return Order::where("factorID",$order)->orderby("id","desc")->get();
     }
 
     /**
