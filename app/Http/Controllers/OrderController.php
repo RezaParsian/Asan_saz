@@ -96,9 +96,17 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request,$order)
     {
-        //
+        $factor=Factor::findOrFail($order);
+        $orders=Order::where("factorID",$factor->id)->update(["status"=>$request->status]);
+        $factor->update(
+            [
+                "status"=>$request->status
+            ]
+        );
+        
+        return $orders;
     }
 
     /**
