@@ -28,6 +28,8 @@
                 <li><a class="{{Menu::SetActive("dashboard")}}" href="{{route("home")}}">صفحه نخست</a></li>
                 <li><a  href="{{route("user.index")}}">لیست کاربران</a></li>
                 <li><a  href="{{route("user.create")}}">ایجاد کاربر</a></li>
+                <li><a  href="{{route("category.index")}}">دسته بندی ها</a></li>
+                <li><a  href="{{route("category.create")}}">ایجاد دسته بندی</a></li>
             </ul>
         </div>
 </div>
