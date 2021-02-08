@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,4 +31,19 @@ class Factor extends Model
         "status",
         "bale",
     ];
+
+    public function getCreatedAtAttribute()
+    {
+        return Verta($this->attributes["created_at"])->format("%y/%m/%d");
+    }
+
+    public function Address()
+    {
+        return $this->hasOne(address::class,"id","addressID");
+    }
+
+    public function Order()
+    {
+        return $this->hasMany(Order::class,"factorID","id");
+    }
 }

@@ -74,7 +74,8 @@ class OrderController extends Controller
      */
     public function show($order)
     {
-        return Order::where("factorID",$order)->orderby("id","desc")->get();
+        return Factor::where("id",$order)->orderby("id","desc")->with(["address","order"])->get();
+        //return Order::where("factorID",$order)->orderby("id","desc")->get();
     }
 
     /**
