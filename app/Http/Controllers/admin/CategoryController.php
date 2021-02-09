@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -15,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::with("sub")->get();
+        $categorys = Category::with("sub")->orderby("parent", "asc")->get();
+        return view("category.list", compact("categorys"));
     }
 
     /**
@@ -25,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categorys = Category::with("sub")->whereDoesntHave("sub")->get();
+        return view("category.new", compact("categorys"));
     }
 
     /**
@@ -36,7 +39,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $valid = $request->validate([
+            "title" => "required|min:2",
+            "img" => "max:2048|image",
+        ]);
+
+        $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
+        $request->img->move(public_path('upload/cat'), $imageName);
+        $valid['img'] = $imageName;
+
+        Category::create([
+            "parent" => $request->parent,
+            "title" => $request->title,
+            "img" => $valid['img'],
+            "show" => $request->show,
+            "olaviyat" => $request->olaviyat,
+        ]);
+
+        return back()->with("msg", "دسته بندی با موفقیت ثبت شد.");
     }
 
     /**
@@ -47,7 +67,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $categorys = Category::with("sub")->whereDoesntHave("sub")->get();
+        $cat = Category::findOrFail($id);
+        return view("category.view", compact("cat", "categorys"));
     }
 
     /**
@@ -70,7 +92,24 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cat = Category::findOrFail($id);
+
+        $valid = $request->validate([
+            "title" => "required|min:2",
+            "img" => "max:2048|image",
+        ]);
+
+        if (!empty($request->img) && !empty($cat->img)) {
+            unlink(public_path("upload/cat/") . $cat->img);
+
+            $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
+            $request->img->move(public_path('upload/cat'), $imageName);
+            $request['img'] = $imageName;
+        }
+
+        $cat->update($request->except(["_token","_method"]));
+
+        return back()->with("msg", "دسته بندی با موفقیت ویرایش شد.");
     }
 
     /**

@@ -46,4 +46,9 @@ class Factor extends Model
     {
         return $this->hasMany(Order::class,"factorID","id");
     }
+
+    public function User()
+    {
+        return $this->hasOne(User::class,"id","userID");
+    }
 }

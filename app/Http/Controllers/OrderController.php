@@ -105,7 +105,7 @@ class OrderController extends Controller
                 "status"=>$request->status
             ]
         );
-        
+
         return $orders;
     }
 

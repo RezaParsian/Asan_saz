@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\AdminstuffController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
@@ -62,3 +63,4 @@ Route::resource('region', RegionController::class);
 Route::resource('banner', BannerController::class);
 Route::resource('timings', TimingController::class);
 Route::resource('order', OrderController::class);
+Route::resource('admin', AdminstuffController::class);

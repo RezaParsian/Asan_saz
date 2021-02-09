@@ -8,10 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $table="category";
+    protected $table = "category";
+
+    protected $fillable = [
+        'parent',
+        'title',
+        'img',
+        'show',
+        'olaviyat'
+    ];
 
     public function sub()
     {
-        return $this->hasMany(Category::class,"parent","id");
+        return $this->hasMany(Product::class, "CategoryID", "id");
+        //return $this->hasMany(Category::class,"parent","id");
     }
 }
