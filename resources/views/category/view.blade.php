@@ -33,7 +33,7 @@
                     <div class="col-md">
                         <label>عکس</label>
                         <div class="row mx-auto">
-                            <input type="file" name="img" class="form-control col" accept="image/x-png,image/gif,image/jpeg"
+                            <input type="file" name="image" class="form-control col" accept="image/x-png,image/gif,image/jpeg"
                                 id="img">
                             @if ($cat->img)
                                 <a href='{{ asset('upload/cat/' . $cat->img) }}' target="_blank">
