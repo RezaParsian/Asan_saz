@@ -32,6 +32,7 @@ class CreateFactorsTable extends Migration
             $table->timestamp("peykrecive")->nullable();
             $table->timestamp("delevry")->nullable();
             $table->string("status",86)->nullable();
+            $table->timestamp("Rddate")->nullable()->comment('Request Delevry Date');
             $table->enum("bale",["Yes","No"])->nullable();
             $table->timestamps();
         });

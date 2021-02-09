@@ -32,6 +32,13 @@ class Factor extends Model
         "bale",
     ];
 
+    protected $appends = ['Rddate'];
+
+    public function getRddateAttribute()
+    {
+        return Verta($this->attributes["Rddate"])->format("%y/%m/%d");
+    }
+
     public function getCreatedAtAttribute()
     {
         return Verta($this->attributes["created_at"])->format("%y/%m/%d");
@@ -44,11 +51,16 @@ class Factor extends Model
 
     public function Order()
     {
-        return $this->hasMany(Order::class,"factorID","id");
+        return $this->hasMany(Order::class,"factorID","id")->with("Product");
     }
 
     public function User()
     {
         return $this->hasOne(User::class,"id","userID");
+    }
+
+    public function Timing()
+    {
+        return $this->hasOne(Timing::class,"id","timingID");
     }
 }

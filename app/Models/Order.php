@@ -18,4 +18,9 @@ class Order extends Model
         "sumprice",
         "status",
     ];
+
+    public function Product()
+    {
+        return $this->hasOne(Product::class,"id","productID");
+    }
 }

@@ -36,7 +36,7 @@
                             <input type="file" name="img" class="form-control col" accept="image/x-png,image/gif,image/jpeg"
                                 id="img">
                             @if ($cat->img)
-                                <a href='{{ asset('upload/cat/' . $cat->img) }}' target="_blank">
+                                <a href='{{ asset('upload/' . $cat->img) }}' target="_blank">
                                     <button type='button' class='btn btn-outline-info ml-2 my-auto'>
                                         <li class='fa fa-eye'></li>
                                     </button>

@@ -45,7 +45,7 @@ class CategoryController extends Controller
         ]);
 
         $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
-        $request->img->move(public_path('upload/cat'), $imageName);
+        $request->img->move(public_path('upload/'), $imageName);
         $valid['img'] = $imageName;
 
         Category::create([
@@ -100,10 +100,10 @@ class CategoryController extends Controller
         ]);
 
         if (!empty($request->img) && !empty($cat->img)) {
-            unlink(public_path("upload/cat/") . $cat->img);
+            unlink(public_path("upload/") . $cat->img);
 
             $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
-            $request->img->move(public_path('upload/cat'), $imageName);
+            $request->img->move(public_path('upload/'), $imageName);
             $request['img'] = $imageName;
         }
 
