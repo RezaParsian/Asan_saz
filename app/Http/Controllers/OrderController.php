@@ -16,7 +16,8 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        return Factor::where("userID",$request->id)->orderby("id","desc")->get();
+        $data=Factor::where("userID",$request->id)->orderby("id","desc")->paginate(15);
+        return $data->all();
     }
 
     /**

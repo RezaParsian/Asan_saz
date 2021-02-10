@@ -25,5 +25,7 @@ Auth::routes(["register" => false]);
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('user', user::class);
-Route::resource('category', CategoryController::class);
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('user', user::class);
+    Route::resource('category', CategoryController::class);
+});
