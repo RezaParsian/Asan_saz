@@ -7,6 +7,8 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function PHPUnit\Framework\fileExists;
+
 class CategoryController extends Controller
 {
     /**
@@ -41,11 +43,11 @@ class CategoryController extends Controller
     {
         $valid = $request->validate([
             "title" => "required|min:2",
-            "img" => "max:2048|image",
+            "image" => "max:2048|image",
         ]);
 
-        $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
-        $request->img->move(public_path('upload/'), $imageName);
+        $imageName = time() . Auth::user()->name . '.' . $request->image->getClientOriginalExtension();
+        $request->image->move(public_path('upload/'), $imageName);
         $valid['img'] = $imageName;
 
         Category::create([
@@ -96,18 +98,20 @@ class CategoryController extends Controller
 
         $valid = $request->validate([
             "title" => "required|min:2",
-            "img" => "max:2048|image",
+            "image" => "max:2048|image",
         ]);
 
-        if (!empty($request->img) && !empty($cat->img)) {
-            unlink(public_path("upload/") . $cat->img);
+        if (!empty($request->image) && !empty($cat->img)) {
+            if(file_exists(public_path("upload/") . $cat->img)){
+                unlink(public_path("upload/") . $cat->img);
+            }
 
-            $imageName = time() . Auth::user()->name . '.' . $request->img->getClientOriginalExtension();
-            $request->img->move(public_path('upload/'), $imageName);
+            $imageName = time() . Auth::user()->name . '.' . $request->image->getClientOriginalExtension();
+            $request->image->move(public_path('upload/'), $imageName);
             $request['img'] = $imageName;
         }
 
-        $cat->update($request->except(["_token","_method"]));
+        $cat->update($request->except(["_token","_method","image"]));
 
         return back()->with("msg", "دسته بندی با موفقیت ویرایش شد.");
     }

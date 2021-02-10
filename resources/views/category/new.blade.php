@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-md">
                         <label>عکس</label>
-                        <input type="file" name="img" class="form-control" accept="image/x-png,image/gif,image/jpeg" required>
+                        <input type="file" name="image" class="form-control" accept="image/x-png,image/gif,image/jpeg" required>
                     </div>
                 </div>
 
