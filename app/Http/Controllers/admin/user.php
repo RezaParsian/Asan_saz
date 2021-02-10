@@ -115,7 +115,7 @@ class user extends Controller
         if (!empty($request->password)) {
             $request["password"] = Hash::make($request->password);
         } else {
-            unset($request->password);
+            unset($request['password']);
         }
         $user->update($request->all());
 
