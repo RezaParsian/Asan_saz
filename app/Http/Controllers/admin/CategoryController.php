@@ -18,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorys = Category::with("sub")->orderby("parent", "asc")->get();
+        $categorys = Category::with("sub")->orderby("parent", "asc")->orderby("olaviyat","asc")->get();
         return view("category.list", compact("categorys"));
     }
 
