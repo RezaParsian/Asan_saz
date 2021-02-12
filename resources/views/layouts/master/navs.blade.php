@@ -2,7 +2,7 @@
 <div class="navigation">
         <div class="navigation-icon-menu">
             <ul>
-                <li data-toggle="tooltip" title="داشبورد" class="{{Menu::SetActive("dashboard")}}">
+                <li data-toggle="tooltip" title="داشبورد" class="active navigation-active {{--Menu::SetActive("dashboard")--}}">
                     <a href="#navigationDashboards" title="داشبوردها">
                         <i class="icon ti-pie-chart"></i>
                         {{-- <span class="badge badge-warning">2</span>
@@ -24,12 +24,14 @@
         </div>
 
         <div class="navigation-menu-body">
-            <ul id="navigationDashboards" class="{{Menu::SetActive("dashboard")}}">
+            <ul id="navigationDashboards" class="active navigation-active {{--Menu::SetActive("dashboard")--}}">
                 <li><a class="{{Menu::SetActive("dashboard")}}" href="{{route("home")}}">صفحه نخست</a></li>
                 <li><a  href="{{route("user.index")}}">لیست کاربران</a></li>
                 <li><a  href="{{route("user.create")}}">ایجاد کاربر</a></li>
                 <li><a  href="{{route("category.index")}}">دسته بندی ها</a></li>
                 <li><a  href="{{route("category.create")}}">ایجاد دسته بندی</a></li>
+                <li><a  href="{{route("product.index")}}">محصولات</a></li>
+                <li><a  href="{{route("product.create")}}">ایجاد محصول</a></li>
             </ul>
         </div>
 </div>
@@ -40,9 +42,7 @@
     <!-- begin::header logo -->
     <div class="header-logo">
         <a href="#">
-            <img class="large-logo" src="{{ asset('assets/media/image/logo.png') }}" alt="...">
-            <img class="small-logo" src="{{ asset('assets/media/image/logo-sm.png') }}" alt="...">
-            <img class="dark-logo" src="{{ asset('assets/media/image/logo-dark.png') }}" alt="...">
+            <img src="{{ asset('assets/media/image/logo.png') }}" class="d-block img-fluid col-md-7 mx-auto">
         </a>
     </div>
     <!-- end::header logo -->

@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md-md" method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
+            <form class="col-md" method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <div class="col-md">

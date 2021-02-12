@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\user;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -28,4 +29,5 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', user::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('product', ProductController::class);
 });

@@ -1,6 +1,6 @@
 @extends('layouts.master.master')
 
-@section('ex-title', 'ایجاد کاربر')
+@section('ex-title', 'نمایش کاربر')
 
 @section('body')
     <div class="card">
@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md-md" method="POST" action="{{ route('category.update', $cat->id) }}"
+            <form class="col-md" method="POST" action="{{ route('category.update', $cat->id) }}"
                 enctype="multipart/form-data">
                 @csrf
                 @method("put")

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AdminstuffController;
+use App\Http\Controllers\ajax;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
@@ -16,6 +17,7 @@ use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
 use PhpParser\Node\Stmt\Return_;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +66,8 @@ Route::resource('banner', BannerController::class);
 Route::resource('timings', TimingController::class);
 Route::resource('order', OrderController::class);
 Route::resource('admin', AdminstuffController::class);
+
+Route::group(['prefix' => 'ajax'], function () {
+    Route::get('/{id}',[ajax::class,"GetCategoryByID"]);
+    Route::get('/name/{id}',[ajax::class,"GetCategoryNameByID"]);
+});

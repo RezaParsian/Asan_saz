@@ -11016,3 +11016,7 @@ body.dark .ui-datepicker select {
     white-space: pre-line;
     overflow-wrap: break-word;
 }
+
+.hand{
+    cursor: pointer;
+}
