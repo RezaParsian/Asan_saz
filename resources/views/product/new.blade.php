@@ -52,7 +52,7 @@
                         <label>دسته بندی</label>
                         <input type="text" id="CategoryID" class="form-control" data-toggle="modal"
                             data-target="#catmodal" onclick="ChangeCat(0)" readonly>
-                            <input type="hidden" name="CategoryID" id="hCategoryID">
+                            <input type="hidden" name="CategoryID" id="hCategoryID" value="0">
                     </div>
                     <div class="col-md">
                         <label>تامین کننده</label>

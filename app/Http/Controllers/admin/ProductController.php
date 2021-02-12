@@ -165,7 +165,8 @@ class ProductController extends Controller
             }
             $update["gallery"] = json_encode($gallery);
 
-            $gl = json_decode($product->gallery);
+            $gl = json_decode($product->gallery) ?? [];
+
             foreach ($gl as $item) {
                 if (file_exists(public_path('upload/' . $item))) {
                     unlink(public_path('upload/' . $item));

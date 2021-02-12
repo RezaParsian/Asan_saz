@@ -63,7 +63,8 @@ class OrderController extends Controller
         }
         return array(
             "status" => "success",
-            "msg" => "سفارشات شما با موفقیت ثبت شدند."
+            "msg" => "سفارشات شما با موفقیت ثبت شدند.",
+            "factorID"=>$id
         );
     }
 
