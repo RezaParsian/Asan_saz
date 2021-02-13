@@ -1,6 +1,6 @@
 @extends('layouts.master.master')
 
-@section('ex-title', 'ایجاد محصول')
+@section('ex-title', 'ایجاد محصول جدید')
 
 @section('body')
     <div class="modal" id="catmodal">
