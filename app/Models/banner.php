@@ -9,6 +9,7 @@ class banner extends Model
 {
     use HasFactory;
     protected $table="banner";
+
     protected $fillable=[
         "BannergpsID",
         "title",
@@ -17,5 +18,11 @@ class banner extends Model
         "link",
         "start_date",
         "end_date",
+        "img",
     ];
+
+    public function Category()
+    {
+        return $this->hasOne(Bannergps::class,"id","BannergpsID");
+    }
 }

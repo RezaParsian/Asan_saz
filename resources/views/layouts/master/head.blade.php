@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/tagsinput/bootstrap-tagsinput.css') }}" type="text/css">
     <!-- App styles -->
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}" type="text/css">
+    @yield('ex-css')
 </head>
 
 <body>

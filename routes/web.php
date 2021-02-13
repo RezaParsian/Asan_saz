@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\user;
@@ -30,4 +31,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('user', user::class);
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
+    Route::resource('banner', BannerController::class);
 });

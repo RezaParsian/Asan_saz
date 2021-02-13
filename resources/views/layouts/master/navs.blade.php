@@ -32,6 +32,8 @@
                 <li><a  href="{{route("category.create")}}">ایجاد دسته بندی</a></li>
                 <li><a  href="{{route("product.index")}}">محصولات</a></li>
                 <li><a  href="{{route("product.create")}}">ایجاد محصول</a></li>
+                <li><a  href="{{route("banner.index")}}">بنرها</a></li>
+                <li><a  href="{{route("banner.create")}}">ایجاد بنر</a></li>
             </ul>
         </div>
 </div>
