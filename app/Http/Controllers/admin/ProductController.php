@@ -16,9 +16,12 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderby("CategoryID", "asc")->orderby("olaviyat", "asc")->paginate(25);
+        $products = Product::where([
+            ["title", "like", "%" . $request->q . "%"],
+            ["highrate", "like", "%" . $request->special . "%"]
+        ])->orderby("CategoryID", "asc")->orderby("olaviyat", "asc")->paginate(25);
 
         if ($products->currentPage() > $products->lastPage()) {
             return redirect(route("product.index") . "/?page=" . $products->lastPage());
@@ -34,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $users = User::where("roll","Supplier")->get();
+        $users = User::where("roll", "Supplier")->get();
         return view("product.new", compact("users"));
     }
 
@@ -96,7 +99,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $users = User::where("roll","Supplier")->get();
+        $users = User::where("roll", "Supplier")->get();
         return view("product.view", compact("product", "users"));
     }
 

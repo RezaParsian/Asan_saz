@@ -137,7 +137,7 @@
 
                 <div class="form-group row">
                     <label>توضیحات</label>
-                    <textarea name="des" class="form-control" required value="{{old("des")}}"></textarea>
+                    <textarea name="des" class="form-control" required>{{old("des")}}</textarea>
                 </div>
                 <input type="submit" class="btn btn-success" value="ثبت">
             </form>
