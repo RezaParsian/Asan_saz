@@ -13,9 +13,14 @@ class FactorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $factors = Factor::whereRaw("status NOT IN ('delivered','canceled user','canceled tuser')")
+        $search=[
+            "open"=>"NOT IN",
+            "close"=>"IN"
+        ];
+
+        $factors = Factor::whereRaw("status ".$search[$request->type ?? "open"]." ('delivered','canceled user','canceled tuser')")
             ->orderby("Rddate", "asc")
             ->orderby("timingID", "asc")->paginate(25);
         return view("factor.list", compact("factors"));
