@@ -99,7 +99,7 @@
 		showOtherMonths: true,
 		selectOtherMonths: true,
 		minDate: 0,
-		maxDate: "+14D"
+		maxDate: "+360D"
 	});
 
     $(document).ready(function(){
