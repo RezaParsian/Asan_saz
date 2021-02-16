@@ -10,12 +10,10 @@
                     <input type="text" class="form-control col-8 mx-2" placeholder="جستجو" name="q" value="{{Request()->q}}">
                     <input type="submit" value="جستجو" class="btn btn-primary">
                     <small class="text-muted col-12 text-center">جستجو بر اساس <strong>نام محصول</strong> می‌باشد.</small>
-                </div>
-            </form>
-            <form class="col-12">
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" name="special" value="Yes" onclick="submit()" {{!empty(Request()->special) ? "checked" : ""}}>
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input" name="special" value="Yes" onclick="submit()" {{!empty(Request()->special) ? "checked" : ""}}>
                     <label class="form-check-label">محصولات ویژه</label>
+                    </div>
                 </div>
             </form>
             <hr class="my-4">
@@ -52,17 +50,21 @@
             </table>
         </div>
         <nav aria-label="Page navigation example" class="mb-3">
+            @php
+                $param=isset(Request()->q) ? "&q=".Request()->q : "";
+                $param.=isset(Request()->special) ? "&special=".Request()->special : "";
+            @endphp
             <ul class="pagination justify-content-center">
                 <li class="page-item {{ $products->currentPage() == 1 ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ route('product.index') }}/?page={{ $products->currentPage() - 1 }}" tabindex="-1"
+                    <a class="page-link" href="{{ route('product.index') }}/?page={{ $products->currentPage() - 1}}{{$param}}" tabindex="-1"
                         aria-disabled="true">قبلی</a>
                 </li>
                 @for ($i = 1; $i <= $products->lastPage(); $i++)
                     <li class="page-item {{ $products->currentPage() == $i ? 'active' : '' }}"><a class="page-link"
-                            href="{{ route('product.index') }}/?page={{ $i }}">{{ $i }}</a></li>
+                            href="{{ route('product.index') }}/?page={{ $i}}{{$param}}">{{ $i }}</a></li>
                 @endfor
                 <li class="page-item {{ $products->currentPage() == $products->lastPage() ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ route('product.index') }}/?page={{ $products->currentPage() + 1 }}">بعدی</a>
+                    <a class="page-link" href="{{ route('product.index') }}/?page={{ $products->currentPage() + 1}}{{$param}}">بعدی</a>
                 </li>
             </ul>
         </nav>
