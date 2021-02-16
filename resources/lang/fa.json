@@ -38,5 +38,12 @@
     "Supplier":"تامین کننده",
     "Courier Manager":"مدیر پیک",
     "Delivery":"پیک",
-    "Customer":"مشتری"
+    "Customer":"مشتری",
+    "waiting":"در انتظار بررسی",
+    "doing":"در حال انجام",
+    "ready":"اماده ارسال",
+    "sending":"در حال ارسال",
+    "delivered":"تحویل شده",
+    "canceled user":"کنسل شده مشتری",
+    "canceled tuser":"کنسل شده تامین کننده"
 }
