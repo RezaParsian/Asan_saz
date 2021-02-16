@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\admin\CategoryController;
+use App\Http\Controllers\admin\FactorController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\user;
 use Illuminate\Support\Facades\Artisan;
@@ -32,4 +33,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('banner', BannerController::class);
+    Route::resource('factor', FactorController::class);
 });
