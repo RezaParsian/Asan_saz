@@ -17,8 +17,8 @@ class BannerController extends Controller
         return banner::where(
             [
                 ["show", "=", "Yes"],
-                ["start_date", "<", date("Y-m-d J:i:s")],
-                ["end_date", ">", date("Y-m-d J:i:s")],
+                ["start_date", "<=", date("Y-m-d J:i:s")],
+                ["end_date", ">=", date("Y-m-d J:i:s")],
             ]
         )->get();
     }
