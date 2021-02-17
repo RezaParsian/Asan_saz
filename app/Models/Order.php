@@ -23,4 +23,9 @@ class Order extends Model
     {
         return $this->hasOne(Product::class,"id","productID");
     }
+
+    public function TaminKonande()
+    {
+        return $this->hasOne(User::class,"id","tuserID");
+    }
 }

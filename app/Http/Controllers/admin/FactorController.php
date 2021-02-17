@@ -3,7 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\address;
 use App\Models\Factor;
+use App\Models\Order;
+use App\Models\Timing;
+use App\Models\User;
+use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 
 class FactorController extends Controller
@@ -53,9 +58,13 @@ class FactorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Factor $factor)
     {
-        //
+        $users=User::whereRaw("roll in ('Operator','Supplier','Delivery')")->get();
+        $address=address::where("userID",$factor->userID)->get();
+        $timings=Timing::where("type",Verta()->formatWord('l'))->get();
+        $orders=Order::where("factorID",$factor->id)->get();
+        return view("factor.view",compact("factor","users","address","timings","orders"));
     }
 
     /**
@@ -76,9 +85,11 @@ class FactorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Factor $factor)
     {
-        //
+        $factor->update($request->all());
+        Order::where("factorID",$factor->id)->update(["status"=>$request->status]);
+        return back()->with("msg","فاکتور با موفقیت ویرایش شد.");
     }
 
     /**
