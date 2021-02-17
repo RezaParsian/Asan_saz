@@ -26,7 +26,7 @@
                 <div class="form-group row">
                     <div class="col-md">
                         <label>مسیر پیشفرض</label>
-                        <select name="moarefID" id="moarefID" class="form-control">
+                        <select name="defaultaid" id="defaultaid" class="form-control">
                             <option value="-1">یک مسیر پیشفرض انتخاب کنید</option>
                             @foreach ($user->address as $address)
                                 @php
