@@ -20,12 +20,19 @@ class FactorController extends Controller
      */
     public function index(Request $request)
     {
-        $search=[
-            "open"=>"NOT IN",
-            "close"=>"IN"
+        $q = "%" . $request->q . "%";
+        $search = [
+            "open" => "NOT IN",
+            "close" => "IN"
         ];
 
-        $factors = Factor::whereRaw("status ".$search[$request->type ?? "open"]." ('delivered','canceled user','canceled tuser')")
+        $factors = Factor::wherehas("User", function ($query) use ($q) {
+            $query->where([
+                ["name","like",$q]
+                ])->orwhere([
+                    ["fname","like",$q]
+                ]);
+        })->whereRaw("status " . $search[$request->type ?? "open"] . " ('delivered','canceled user','canceled tuser')")
             ->orderby("Rddate", "asc")
             ->orderby("timingID", "asc")->paginate(25);
         return view("factor.list", compact("factors"));
@@ -60,11 +67,11 @@ class FactorController extends Controller
      */
     public function show(Factor $factor)
     {
-        $users=User::whereRaw("roll in ('Operator','Supplier','Delivery')")->get();
-        $address=address::where("userID",$factor->userID)->get();
-        $timings=Timing::where("type",Verta()->formatWord('l'))->get();
-        $orders=Order::where("factorID",$factor->id)->get();
-        return view("factor.view",compact("factor","users","address","timings","orders"));
+        $users = User::whereRaw("roll in ('Operator','Supplier','Delivery')")->get();
+        $address = address::where("userID", $factor->userID)->get();
+        $timings = Timing::where("type", Verta()->formatWord('l'))->get();
+        $orders = Order::where("factorID", $factor->id)->get();
+        return view("factor.view", compact("factor", "users", "address", "timings", "orders"));
     }
 
     /**
@@ -88,8 +95,8 @@ class FactorController extends Controller
     public function update(Request $request, Factor $factor)
     {
         $factor->update($request->all());
-        Order::where("factorID",$factor->id)->update(["status"=>$request->status]);
-        return back()->with("msg","فاکتور با موفقیت ویرایش شد.");
+        Order::where("factorID", $factor->id)->update(["status" => $request->status]);
+        return back()->with("msg", "فاکتور با موفقیت ویرایش شد.");
     }
 
     /**
