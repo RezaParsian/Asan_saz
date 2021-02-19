@@ -59,7 +59,7 @@ class user extends Controller
         $validate = $request->validate([
             "name" => "required|min:3",
             "fname" => "required|min:3",
-            "code_meli" => "required|min:10",
+            "code_meli" => "required|min:10|unique:users,code_meli",
             "phone" => "required|min:11|unique:users,phone",
             "email" => "unique:users,email"
         ]);
@@ -109,7 +109,7 @@ class user extends Controller
         $validate = $request->validate([
             "name" => "required|min:3",
             "fname" => "required|min:3",
-            "code_meli" => "required|min:10",
+            "code_meli" => "required|min:10|unique:users,code_meli,$id",
             "phone" => "required|min:11|unique:users,phone,$id",
             "email" => "unique:users,email,$id"
         ]);
