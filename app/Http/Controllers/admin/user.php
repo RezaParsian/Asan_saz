@@ -60,7 +60,8 @@ class user extends Controller
             "name" => "required|min:3",
             "fname" => "required|min:3",
             "code_meli" => "required|min:10",
-            "phone" => "required|min:11",
+            "phone" => "required|min:11|unique:users,phone",
+            "email" => "unique:users,email"
         ]);
 
         $request["password"] = Hash::make($request->password);
@@ -103,15 +104,17 @@ class user extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=ModelsUser::findOrFail($id);
+        $user = ModelsUser::findOrFail($id);
 
         $validate = $request->validate([
             "name" => "required|min:3",
             "fname" => "required|min:3",
             "code_meli" => "required|min:10",
-            "phone" => "required|min:11",
+            "phone" => "required|min:11|unique:users,phone,$id",
+            "email" => "unique:users,email,$id"
         ]);
 
+        return $request;
         if (!empty($request->password)) {
             $request["password"] = Hash::make($request->password);
         } else {
@@ -119,7 +122,7 @@ class user extends Controller
         }
         $user->update($request->all());
 
-        return back()->with("msg","کاربر با موفقیت ویرایش شد.");
+        return back()->with("msg", "کاربر با موفقیت ویرایش شد.");
     }
 
     /**
