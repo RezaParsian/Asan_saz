@@ -1,6 +1,6 @@
 @extends('layouts.master.master')
 
-@section('ex-title', 'نمایش کاربر')
+@section('ex-title', 'نمایش فاکتور')
 
 @section('body')
     <div class="card">
@@ -187,8 +187,15 @@
     </div>
 
     <div class="card">
-        <div class="card-header">
-            محصولات سبد
+        <div class="card-header row">
+            <div class="col-md mt-1">
+                محصولات سبد
+            </div>
+            <div class="col-md">
+                <a target="_blank" href="{{route("orders.create")}}?factorID={{$factor->id}}&userID={{$factor->id}}">
+                    <button class="btn btn-outline-primary float-right">ثبت سفارش</button>
+                </a>
+            </div>
         </div>
         <div class="card-body">
             <table class="table-responsive-md text-center table table-bordered table-striped table-hover">
@@ -211,7 +218,8 @@
                             <td>{{ $order->price }}</td>
                             <td>{{ $order->sumprice }}</td>
                             <td>
-                                <form action="{{ route('orders.destroy', $order->id) }}" method="post" onsubmit="return YouSure()">
+                                <form action="{{ route('orders.destroy', $order->id) }}" method="post"
+                                    onsubmit="return YouSure()">
                                     @csrf
                                     @method("delete")
                                     <a target="_blank" href="{{ route('orders.show', $order->id) }}">
@@ -241,14 +249,16 @@
             $("#timingID ").val("{{ $factor->timingID }}");
             $("#status").val("{{ $factor->status }}");
         });
-        function YouSure(){
-            var result=prompt("آیا از حذف این سفارش مطمئن هستید؟","خیر");
 
-            if (result=="بله") {
+        function YouSure() {
+            var result = prompt("آیا از حذف این سفارش مطمئن هستید؟", "خیر");
+
+            if (result == "بله") {
                 return true;
             }
 
             return false;
         }
+
     </script>
 @endsection

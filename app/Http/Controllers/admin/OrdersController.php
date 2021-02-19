@@ -27,7 +27,9 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $proeudcts = Product::where([["show", "Yes"], ["action", "pay"]])->get();
+        $users = User::where("roll", "Supplier")->get();
+        return view("order.new", compact("proeudcts", "users"));
     }
 
     /**
@@ -38,7 +40,17 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "productID" => "required",
+            "tuserID" => "required",
+            "price" => "required",
+            "count" => "required",
+            "sumprice" => "required",
+        ]);
+
+        Order::create($request->all());
+
+        return back()->with("msg","سفارش شما با موفقت ثبت شد.");
     }
 
     /**
@@ -49,9 +61,9 @@ class OrdersController extends Controller
      */
     public function show(Order $order)
     {
-        $proeudcts=Product::where([["show","Yes"],["action","pay"]])->get();
-        $users=User::where("roll","Supplier")->get();
-        return view("order.view",compact("order","proeudcts","users"));
+        $proeudcts = Product::where([["show", "Yes"], ["action", "pay"]])->get();
+        $users = User::where("roll", "Supplier")->get();
+        return view("order.view", compact("order", "proeudcts", "users"));
     }
 
     /**
@@ -72,10 +84,10 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Order $order)
+    public function update(Request $request, Order $order)
     {
         $order->update($request->all());
-        return back()->with("msg","سفارش موردنظر با موفقیت ویرایش شد.");
+        return back()->with("msg", "سفارش موردنظر با موفقیت ویرایش شد.");
     }
 
     /**
