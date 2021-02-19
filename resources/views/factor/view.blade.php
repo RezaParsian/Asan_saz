@@ -204,17 +204,24 @@
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
-                        <tr>
+                        <tr id="{{ $order->id }}">
                             <td>{{ $order->Product->title }}</td>
-                            <td>{{ $order->TaminKonande->name." ".$order->TaminKonande->fname }}</td>
+                            <td>{{ $order->TaminKonande->name . ' ' . $order->TaminKonande->fname }}</td>
                             <td>{{ $order->count }}</td>
                             <td>{{ $order->price }}</td>
                             <td>{{ $order->sumprice }}</td>
                             <td>
-                                <a href="{{ route('order.show', $order->id) }}">
-                                    <button type="button" class="btn btn-outline-warning btn-floating"><i
-                                            class="fa fa-eye"></i></button>
-                                </a>
+                                <form action="{{ route('orders.destroy', $order->id) }}" method="post" onsubmit="return YouSure()">
+                                    @csrf
+                                    @method("delete")
+                                    <a target="_blank" href="{{ route('orders.show', $order->id) }}">
+                                        <button type="button" class="btn btn-outline-warning btn-floating"><i
+                                                class="fa fa-eye"></i></button>
+                                    </a>
+                                    |
+                                    <button type="subbmit" class="btn btn-outline-danger btn-floating"><i
+                                            class="fa fa-trash-o"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -234,6 +241,14 @@
             $("#timingID ").val("{{ $factor->timingID }}");
             $("#status").val("{{ $factor->status }}");
         });
+        function YouSure(){
+            var result=prompt("آیا از حذف این سفارش مطمئن هستید؟","خیر");
 
+            if (result=="بله") {
+                return true;
+            }
+
+            return false;
+        }
     </script>
 @endsection
