@@ -28,12 +28,12 @@ class FactorController extends Controller
 
         $factors = Factor::wherehas("User", function ($query) use ($q) {
             $query->where([
-                ["name","like",$q]
-                ])->orwhere([
-                    ["fname","like",$q]
-                ]);
+                ["name", "like", $q]
+            ])->orwhere([
+                ["fname", "like", $q]
+            ]);
         })->whereRaw("status " . $search[$request->type ?? "open"] . " ('delivered','canceled user','canceled tuser')")
-            ->orderby("id", "desc")->paginate(25);
+            ->orderby("id", "desc")->orwhere([["id", $request->q]])->paginate(25);
 
         return view("factor.list", compact("factors"));
     }

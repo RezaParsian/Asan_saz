@@ -30,7 +30,7 @@
                     @foreach ($factors as $factor)
                         <tr>
                             <td>{{ $factor->id }}</td>
-                            <td>{{ $factor->User->name." ".$factor->User->fname}}</td>
+                            <td>{{ ($factor->User->name ?? "User")." ". ($factor->User->fname ?? "Not Found")}}</td>
                             <td>{{ number_format($factor->totalprice) }}</td>
                             <td>{{ $factor->Rddate }}</td>
                             <td>{{ $factor->Timing->title }}</td>
