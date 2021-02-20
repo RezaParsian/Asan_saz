@@ -51,7 +51,7 @@
                         </select>
                     </div>
                     <div class="col-md">
-                        <label>پیگ</label>
+                        <label>{{__("Delivery")}}</label>
                         <select name="puserID" id="puserID" class="form-control">
                             <option value="-1">یک پیک انتخاب کنید</option>
                             @foreach ($users->where('roll', 'Delivery') as $item)
@@ -102,8 +102,13 @@
                             value="{{ $factor->comision }}">
                     </div>
                     <div class="col-md">
-                        <label>recive</label>
-                        <input type="text" class="form-control text-center" value="{{ $factor->recive }}" readonly>
+                        <label>وضعیت پرداخت</label>
+                        <select name="recive" id="recive" class="form-control">
+                            <option value="-1">یک اپراتور انتخاب کنید</option>
+                            @foreach (['Yes',"No"] as $item)
+                                <option value="{{ $item }}">{{ __($item) }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
@@ -248,6 +253,7 @@
             $("#addressID").val("{{ $factor->addressID }}");
             $("#timingID ").val("{{ $factor->timingID }}");
             $("#status").val("{{ $factor->status }}");
+            $("#recive").val("{{$factor->recive}}");
         });
 
         function YouSure() {
@@ -259,6 +265,5 @@
 
             return false;
         }
-
     </script>
 @endsection

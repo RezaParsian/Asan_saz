@@ -36,7 +36,7 @@
                         </select>
                     </div>
                     <div class="col-md">
-                        <label>تایمن کننده</label>
+                        <label>تامین کننده</label>
                         <select name="tuserID" id="tuserID" class="form-control">
                             <option value="-1">یک اپراتور انتخاب کنید</option>
                             @foreach ($users as $item)

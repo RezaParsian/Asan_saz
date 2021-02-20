@@ -33,8 +33,8 @@ class FactorController extends Controller
                     ["fname","like",$q]
                 ]);
         })->whereRaw("status " . $search[$request->type ?? "open"] . " ('delivered','canceled user','canceled tuser')")
-            ->orderby("Rddate", "asc")
-            ->orderby("timingID", "asc")->paginate(25);
+            ->orderby("id", "desc")->paginate(25);
+
         return view("factor.list", compact("factors"));
     }
 

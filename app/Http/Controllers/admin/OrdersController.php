@@ -27,7 +27,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        $proeudcts = Product::where([["show", "Yes"], ["action", "pay"]])->get();
+        $proeudcts = Product::where([["show", "Yes"]])->get();
         $users = User::where("roll", "Supplier")->get();
         return view("order.new", compact("proeudcts", "users"));
     }
@@ -61,7 +61,7 @@ class OrdersController extends Controller
      */
     public function show(Order $order)
     {
-        $proeudcts = Product::where([["show", "Yes"], ["action", "pay"]])->get();
+        $proeudcts = Product::where([["show", "Yes"]])->get();
         $users = User::where("roll", "Supplier")->get();
         return view("order.view", compact("order", "proeudcts", "users"));
     }

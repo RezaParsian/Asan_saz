@@ -39,6 +39,11 @@ class Factor extends Model
         return Verta($this->attributes["Rddate"])->format("%y/%m/%d");
     }
 
+    public function getUpdatedAtAttribute()
+    {
+        return Verta($this->attributes["updated_at"])->format("%y/%m/%d");
+    }
+
     public function getCreatedAtAttribute()
     {
         return Verta($this->attributes["created_at"])->format("%y/%m/%d");
