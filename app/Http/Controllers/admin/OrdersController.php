@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,7 @@ class OrdersController extends Controller
     public function show(Order $order)
     {
         $proeudcts = Product::where([["show", "Yes"]])->get();
-        $users = User::where("roll", "Supplier")->get();
+        $users=$order->Product->action=="one_click" ? Service::where("productID",$order->productID)->get()->unique(("productID")) : User::where("roll", "Supplier")->get();
         return view("order.view", compact("order", "proeudcts", "users"));
     }
 
