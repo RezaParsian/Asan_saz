@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\FactorController;
 use App\Http\Controllers\admin\OrdersController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\user;
+use App\Http\Controllers\admin\CloseFactorController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('product', ProductController::class);
     Route::resource('banner', BannerController::class);
     Route::resource('factor', FactorController::class);
+    Route::resource('closefactor', CloseFactorController::class);
     Route::resource('orders', OrdersController::class);
 });

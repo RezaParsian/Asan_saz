@@ -1,6 +1,6 @@
 @extends('layouts.master.master')
 
-@section('ex-title', 'لیست سفارشات')
+@section('ex-title', Request()->is("closefactor") ? "لیست سفارشات بسته" : "لیست سفارشات")
 
 @section('body')
     <div class="card">
@@ -36,7 +36,7 @@
                             <td>{{ $factor->Timing->title }}</td>
                             <td>{{ __($factor->status) }}</td>
                             <td>
-                                <a href="{{route("factor.show",$factor->id)}}">
+                                <a href="{{Request()->is("closefactor") ? route("closefactor.show",$factor->id) : route("factor.show",$factor->id)}}">
                                     <button type="button" class="btn btn-outline-warning btn-floating"><i class="fa fa-eye"></i></button>
                                 </a>
                             </td>

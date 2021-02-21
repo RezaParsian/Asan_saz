@@ -3,6 +3,9 @@
 @section('ex-title', 'نمایش فاکتور')
 
 @section('body')
+@php
+    $factor = $factor ?? $closefactor;
+@endphp
     <div class="card">
         <div class="card-body">
             @if (!empty(session()->get('msg')))
@@ -106,7 +109,7 @@
                         <select name="recive" id="recive" class="form-control">
                             <option value="-1">یک اپراتور انتخاب کنید</option>
                             @foreach (['Yes',"No"] as $item)
-                                <option value="{{ $item }}">{{ __($item) }}</option>
+                                <option value="{{ $item }}">{{ $item=="Yes" ? "پرداخت شده" : "پرداخت نشده" }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -246,6 +249,11 @@
 
 @section('ex-js')
     <script>
+        if({{Request()->is("closefactor/".$factor->id)}}){
+            $("select:not(#status)").prop( "disabled", true );
+            $("input:not(input:submit)").prop( "disabled", true );
+            $("button").addClass("d-none")
+        }
         $(document).ready(function() {
             $("#ouserID").val("{{ $factor->ouserID }}");
             $("#tuserID").val("{{ $factor->tuserID }}");

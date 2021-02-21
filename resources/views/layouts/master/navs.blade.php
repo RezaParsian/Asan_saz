@@ -35,6 +35,7 @@
                 <li><a  href="{{route("banner.index")}}">بنرها</a></li>
                 <li><a  href="{{route("banner.create")}}">ایجاد بنر</a></li>
                 <li><a  href="{{route("factor.index")}}">فاکتور ها</a></li>
+                <li><a  href="{{route("closefactor.index")}}">فاکتور های بسته</a></li>
             </ul>
         </div>
 </div>
