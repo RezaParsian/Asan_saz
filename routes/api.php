@@ -44,7 +44,7 @@ Route::group(['prefix' => ''], function () {
     Route::match(['get', 'post'], '/AllConfig', function () {
         $time = new Verta();
         $now = $time->formatWord('l ') . $time->format('%d %B %Y');
-        $id=Request()?->id;
+        $id=Request()->id ?? 0;
         $user=User::where("id",$id)->with("address",function($query) use($id){
             return $query->where("id",$id);
         })->first();
@@ -59,7 +59,7 @@ Route::group(['prefix' => ''], function () {
             "product" => $product->Fetch(),
             "category" => $category->Fetch(),
             "banner" => $banner->index(),
-            "user"=>$user?->only("name","fname","phone","state","address"),
+            "user"=>$user ? $user->only("name","fname","phone","state","address") : null,
             "time" => $now,
             "today" => $time->format("%d %B"),
             "tomorrow" => ($time->format("%d") + 1) . " " . $time->format("%B")
