@@ -13,6 +13,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TimingController;
 use App\Http\Helper\Rp76;
+use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
@@ -43,18 +44,25 @@ Route::group(['prefix' => ''], function () {
     Route::match(['get', 'post'], '/AllConfig', function () {
         $time = new Verta();
         $now = $time->formatWord('l ') . $time->format('%d %B %Y');
+        $id=Request()?->id;
+        $user=User::where("id",$id)->with("address",function($query) use($id){
+            return $query->where("id",$id);
+        })->first();
 
         $setting = new SettingController;
         $product = new ProductController;
         $category = new CategoryController;
+        $banner = new BannerController;
 
         return array(
             "setting" => $setting->Fetch(),
             "product" => $product->Fetch(),
             "category" => $category->Fetch(),
+            "banner" => $banner->index(),
+            "user"=>$user?->only("name","fname","phone","state","address"),
             "time" => $now,
-            "today"=>$time->format("%d %B"),
-            "tomorrow"=>($time->format("%d")+1)." ".$time->format("%B")
+            "today" => $time->format("%d %B"),
+            "tomorrow" => ($time->format("%d") + 1) . " " . $time->format("%B")
         );
     })->name("api-fetchsetting");
 });
@@ -68,6 +76,6 @@ Route::resource('order', OrderController::class);
 Route::resource('admin', AdminstuffController::class);
 
 Route::group(['prefix' => 'ajax'], function () {
-    Route::get('/{id}',[ajax::class,"GetCategoryByID"]);
-    Route::get('/name/{id}',[ajax::class,"GetCategoryNameByID"]);
+    Route::get('/{id}', [ajax::class, "GetCategoryByID"]);
+    Route::get('/name/{id}', [ajax::class, "GetCategoryNameByID"]);
 });

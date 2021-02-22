@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->hasOne(Category::class, "id", "CategoryID");
     }
+
+    public function User()
+    {
+        return $this->hasOne(User::class,"id","tuserID");
+    }
 }
