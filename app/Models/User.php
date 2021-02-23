@@ -68,6 +68,10 @@ class User extends Authenticatable
     public function Address()
     {
         return $this->hasMany(address::class,"userID","id");
+    }
 
+    public function SingleAddress()
+    {
+        return $this->hasOne(address::class,"id","defaultaid");
     }
 }
