@@ -74,6 +74,11 @@
                         </select>
                     </div>
                     <div class="col-md">
+                        <label>نوع</label>
+                        <select name="linkable" id="linkable" class="form-control">
+                            <option value="link">لینک</option>
+                            <option value="product">محصول</option>
+                        </select>
                     </div>
                 </div>
 
@@ -105,6 +110,7 @@
     $(document).ready(function(){
         $("#BannergpsID").val("{{$banner->BannergpsID}}");
         $("#show").val("{{$banner->show}}");
+        $("#linkable").val("{{$banner->linkable}}");
     })
     </script>
 

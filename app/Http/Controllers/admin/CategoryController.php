@@ -16,9 +16,10 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categorys = Category::with("sub")->orderby("parent", "asc")->orderby("olaviyat","asc")->get();
+        $q = "%" . $request->q . "%";
+        $categorys = Category::where("title","like",$q)->with("sub")->orderby("parent", "asc")->orderby("olaviyat","asc")->get();
         return view("category.list", compact("categorys"));
     }
 

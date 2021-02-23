@@ -69,6 +69,11 @@
                         </select>
                     </div>
                     <div class="col-md">
+                        <label>نوع</label>
+                        <select name="linkable" id="linkable" class="form-control">
+                            <option value="link">لینک</option>
+                            <option value="product">محصول</option>
+                        </select>
                     </div>
                 </div>
 

@@ -251,7 +251,7 @@
     <script>
         if({{Request()->is("closefactor/".$factor->id)}}){
             $("select:not(#status)").prop( "disabled", true );
-            $("input:not(input:submit)").prop( "disabled", true );
+            $("input:not([type=hidden],[type=submit])").prop( "disabled", true );
             $("button").addClass("d-none")
         }
         $(document).ready(function() {

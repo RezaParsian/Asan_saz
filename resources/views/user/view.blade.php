@@ -158,6 +158,7 @@
                             value="{{ $user->bank }}">
                     </div>
                     <div class="col-md">
+                        <img src="{{asset($user->img)}}" loading="lazy">
                     </div>
                 </div>
                 <input type="submit" class="btn btn-success" value="ثبت">
