@@ -114,7 +114,6 @@ class user extends Controller
             "email" => "unique:users,email,$id"
         ]);
 
-        return $request;
         if (!empty($request->password)) {
             $request["password"] = Hash::make($request->password);
         } else {
