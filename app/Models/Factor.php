@@ -51,21 +51,21 @@ class Factor extends Model
 
     public function Address()
     {
-        return $this->hasOne(address::class,"id","addressID");
+        return $this->hasOne(address::class, "id", "addressID");
     }
 
     public function Order()
     {
-        return $this->hasMany(Order::class,"factorID","id")->with("Product");
+        return $this->hasMany(Order::class, "factorID", "id")->with("Product");
     }
 
     public function User()
     {
-        return $this->hasOne(User::class,"id","userID");
+        return $this->hasOne(User::class, "id", "userID");
     }
 
     public function Timing()
     {
-        return $this->hasOne(Timing::class,"id","timingID");
+        return $this->hasOne(Timing::class, "id", "timingID");
     }
 }

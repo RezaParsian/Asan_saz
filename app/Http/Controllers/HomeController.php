@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Factor;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $factors=Factor::selectraw("status,count(status) as cnt,sum(totalprice) as price")->groupby("status")->get()->each->setAppends([]);
+        $users=User::wherein('roll',['Supplier','Delivery','Customer'])->selectraw("roll,count(roll) as cnt")->groupby("roll")->get();
+        return view('home',compact("factors","users"));
     }
 }
