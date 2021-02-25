@@ -217,30 +217,8 @@
     @endsection
 
     @section('ex-js')
-        <script src="{{ asset('assets/Owl/owl.carousel.min.js') }}"></script>
         <script>
             $(document).ready(function() {
-                var owl = $('.owl-carousel').owlCarousel({
-                    loop: true,
-                    nav: false,
-                    rtl: true,
-                    responsiveClass: true,
-                    responsive: {
-                        0: {
-                            items: 1,
-                            nav: false
-                        },
-                        600: {
-                            items: 2,
-                            nav: false
-                        },
-                        1000: {
-                            items: 3,
-                            nav: false,
-                            loop: false
-                        }
-                    }
-                });
                 const factors = JSON.parse('{!!  $factors !!}');
                 const users = JSON.parse('{!!  $users !!}');
 
