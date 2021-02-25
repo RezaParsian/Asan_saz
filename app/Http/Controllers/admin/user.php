@@ -61,7 +61,7 @@ class user extends Controller
             "fname" => "required|min:3",
             "code_meli" => "required|min:10|unique:users,code_meli",
             "phone" => "required|min:11|unique:users,phone",
-            "email" => "unique:users,email"
+            "email" => "nullable|unique:users,email"
         ]);
 
         $request["password"] = Hash::make($request->password);
@@ -111,7 +111,7 @@ class user extends Controller
             "fname" => "required|min:3",
             "code_meli" => "required|min:10|unique:users,code_meli,$id",
             "phone" => "required|min:11|unique:users,phone,$id",
-            "email" => "unique:users,email,$id"
+            "email" => "nullable|unique:users,email,$id",
         ]);
 
         if (!empty($request->password)) {
@@ -132,6 +132,5 @@ class user extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }

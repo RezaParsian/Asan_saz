@@ -158,8 +158,15 @@
                             value="{{ $user->bank }}">
                     </div>
                     <div class="col-md">
-                        <img src="{{asset($user->img)}}" loading="lazy">
+                        <label>شماره کارت</label>
+                        <select name="block" id="block" class="form-control">
+                            <option value="Yes">بله</option>
+                            <option value="No">خیر</option>
+                        </select>
                     </div>
+                </div>
+                <div class="form-group row">
+                    <img src="{{asset($user->img)}}" loading="lazy">
                 </div>
                 <input type="submit" class="btn btn-success" value="ثبت">
             </form>
@@ -172,6 +179,7 @@
         $(document).ready(function() {
             $("#roll").val("{{ $user->roll }}");
             $("#special").val("{{ $user->special }}");
+            $("#block").val("{{ $user->block }}");
             $("#sex").val("{{ $user->sex }}");
             $("#taminkind").val("{{ $user->taminkind }}");
             $("#vehicle").val("{{ $user->vehicle }}");
