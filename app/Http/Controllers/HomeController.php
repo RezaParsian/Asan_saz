@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $factors=Factor::selectraw("status,count(status) as cnt,sum(totalprice) as price")->groupby("status")->get()->each->setAppends([]);
+        $factors=Factor::where("Rddate","like","%".date("Y-m-d")."%")->selectraw("status,count(status) as cnt,sum(totalprice) as price")->groupby("status")->get()->each->setAppends([]);
         $users=User::wherein('roll',['Supplier','Delivery','Customer'])->selectraw("roll,count(roll) as cnt")->groupby("roll")->get();
         return view('home',compact("factors","users"));
     }

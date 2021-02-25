@@ -123,10 +123,10 @@
                                 </div>
                             </div>
                             <span class="font-size-13">{{ __('canceled user') }}</span>
-                            <h2 class="m-1 ml-auto font-weight-bold primary-font line-height-30" id="canceled user"
+                            <h2 class="m-1 ml-auto font-weight-bold primary-font line-height-30" id="canceled_user"
                                 style="color:var(--red)">0</h2>
                         </div>
-                        <div class="col text-center" id="canceled user_price">
+                        <div class="col text-center" id="canceled_user_price">
                             0 تومان
                         </div>
                     </div>
@@ -146,10 +146,10 @@
                             </div>
                         </div>
                         <span class="font-size-13">{{ __('canceled tuser') }}</span>
-                        <h2 class="m-1 ml-auto font-weight-bold primary-font line-height-30" id="canceled tuser"
+                        <h2 class="m-1 ml-auto font-weight-bold primary-font line-height-30" id="canceled_tuser"
                             style="color:var(--orange)">0</h2>
                     </div>
-                    <div class="col text-center" id="canceled tuser_price">
+                    <div class="col text-center" id="canceled_tuser_price">
                         0 تومان
                     </div>
                 </div>
@@ -223,8 +223,8 @@
                 const users = JSON.parse('{!!  $users !!}');
 
                 for (var item of factors) {
-                    $("#" + item['status']).text(Number((parseInt(item['cnt'])).toFixed(1)).toLocaleString());
-                    $("#" + item['status'] + "_price").text(Number((parseInt(item['price'])).toFixed(1)).toLocaleString() + " تومان");
+                    $("#" + item['status'].replace(" ","_")).text(Number((parseInt(item['cnt'])).toFixed(1)).toLocaleString());
+                    $("#" + item['status'].replace(" ","_") + "_price").text(Number((parseInt(item['price'])).toFixed(1)).toLocaleString() + " تومان");
                 }
 
                 for (var item of users) {
