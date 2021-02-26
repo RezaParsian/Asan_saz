@@ -56,6 +56,7 @@
             @php
                 $param=isset(Request()->q) ? "&q=".Request()->q : "";
                 $param.=isset(Request()->special) ? "&special=".Request()->special : "";
+                $param.=isset(Request()->roll) ? "&roll=".Request()->roll : "";
             @endphp
             <ul class="pagination justify-content-center">
                 <li class="page-item {{ $factors->currentPage() == 1 ? 'disabled' : '' }}">
