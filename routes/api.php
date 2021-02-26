@@ -11,12 +11,14 @@ use App\Http\Controllers\Profile;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SmsController;
+use App\Http\Controllers\taminapi;
 use App\Http\Controllers\TimingController;
 use App\Http\Helper\Rp76;
 use App\Models\User;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\Return_;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
@@ -76,4 +78,9 @@ Route::resource('admin', AdminstuffController::class);
 Route::group(['prefix' => 'ajax'], function () {
     Route::get('/{id}', [ajax::class, "GetCategoryByID"]);
     Route::get('/name/{id}', [ajax::class, "GetCategoryNameByID"]);
+});
+
+Route::prefix('tamin')->group(function () {
+    Route::post('login', [taminapi::class,"Login"]);
+    Route::get('info/{user}', [taminapi::class,"Info"]);
 });
