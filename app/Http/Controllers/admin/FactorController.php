@@ -20,7 +20,17 @@ class FactorController extends Controller
      */
     public function index(Request $request)
     {
+        $datebetween = [];
+        $start = explode("-", $request->start_date);
+        $start = count($start) > 1 ? implode("-", Verta::getGregorian($start[0], $start[1], $start[2])) : date("Y-m-d", strtotime("-365 day"));
+        array_push($datebetween, $start);
+        $end = explode("-", $request->end_date);
+        $end = count($end) > 1 ? implode("-", Verta::getGregorian($end[0], $end[1], $end[2])) : date("Y-m-d", strtotime("+365 day"));
+        array_push($datebetween, $end);
+
         $q = "%" . $request->q . "%";
+        $roll = isset($request->roll) ? "('" . $request->roll . "')" : "('waiting','doing','ready','sending')";
+
         $search = [
             "open" => "NOT IN",
             "close" => "IN"
@@ -32,7 +42,8 @@ class FactorController extends Controller
             ])->orwhere([
                 ["fname", "like", $q]
             ]);
-        })->whereRaw("status " . $search[$request->type ?? "open"] . " ('delivered','canceled user','canceled tuser')")
+        })->whereRaw("status " . $search[$request->type ?? "close"] . " $roll")
+            ->whereBetween("created_at", $datebetween)
             ->orderby("id", "desc")->orwhere([["id", $request->q]])->paginate(25);
 
         return view("factor.list", compact("factors"));
@@ -94,6 +105,15 @@ class FactorController extends Controller
      */
     public function update(Request $request, Factor $factor)
     {
+        $request->merge([
+            "statusroll" => ['waiting', 'doing', 'ready', 'sending', 'delivered', 'canceled user', 'canceled tuser'],
+            "reciveroll" => ['NO', 'YES']
+        ]);
+        $request->validate([
+            "status" => "nullable|in_array:statusroll.*",
+            "recive" => "nullable|in_array:reciveroll.*",
+        ]);
+
         $factor->update($request->all());
         Order::where("factorID", $factor->id)->update(["status" => $request->status]);
         return back()->with("msg", "فاکتور با موفقیت ویرایش شد.");

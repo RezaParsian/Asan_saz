@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('user.update',$user->id) }}">
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('user.update',$user->id) }}">
                 @csrf
                 @method("put")
                 <div class="form-group row">
@@ -158,16 +158,18 @@
                             value="{{ $user->bank }}">
                     </div>
                     <div class="col-md">
-                        <label>شماره کارت</label>
+                        <label>وضعیت کاربر</label>
                         <select name="block" id="block" class="form-control">
                             <option value="Yes">بله</option>
                             <option value="No">خیر</option>
                         </select>
                     </div>
                 </div>
+                @if ($user->img)
                 <div class="form-group row">
-                    <img src="{{asset($user->img)}}" loading="lazy">
+                    <img src="{{asset("upload/".$user->img)}}" loading="lazy">
                 </div>
+                @endif
                 <input type="submit" class="btn btn-success" value="ثبت">
             </form>
         </div>
@@ -184,6 +186,18 @@
             $("#taminkind").val("{{ $user->taminkind }}");
             $("#vehicle").val("{{ $user->vehicle }}");
         });
-
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
+        }
     </script>
 @endsection

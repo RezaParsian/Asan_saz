@@ -20,19 +20,20 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('banner.store') }}" enctype="multipart/form-data">
+            <form class="col-md" method="POST" onsubmit="return CheckSubmit()" action="{{ route('banner.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <div class="col-md">
                         <label>عنوان</label>
-                        <input required type="text" id="CategoryID" class="form-control" placeholder="عنوان" name="title" value="{{old("title")}}">
+                        <input required type="text" id="CategoryID" class="form-control" placeholder="عنوان" name="title"
+                            value="{{ old('title') }}">
                     </div>
                     <div class="col-md">
                         <label>دسته بندی</label>
                         <select name="BannergpsID" id="BannergpsID" class="form-control">
                             <option value="-1">یک دسته بندی انتخاب کنید.</option>
                             @foreach ($categoryes as $cat)
-                                <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                <option value="{{ $cat->id }}">{{ $cat->title }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -52,7 +53,7 @@
                 <div class="form-group row">
                     <div class="col-md">
                         <label>لینک</label>
-                        <input required type="text" name="link" class="form-control" value="{{old("link")}}">
+                        <input required type="text" name="link" class="form-control" value="{{ old('link') }}">
                     </div>
                     <div class="col-md">
                         <label>عکس</label>
@@ -95,12 +96,27 @@
 
     <script>
         $('input[name="start_date"],input[name="end_date"]').datepicker({
-		dateFormat: "yy/mm/dd",
-		showOtherMonths: true,
-		selectOtherMonths: true,
-		minDate: 0,
-		maxDate: "+360D"
-	});
+            dateFormat: "yy/mm/dd",
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            minDate: 0,
+            maxDate: "+360D"
+        });
+
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
+        }
+
     </script>
 
 @endsection

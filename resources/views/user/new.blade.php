@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('user.store') }}">
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('user.store') }}">
                 @csrf
                 <div class="form-group row">
                     <div class="col-md">
@@ -144,4 +144,24 @@
             </form>
         </div>
     </div>
+@endsection
+
+@section('ex-js')
+    <script>
+        function CheckSubmit() {
+            var result = true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after(
+                        "<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result = false;
+                    return;
+                }
+            })
+            return result;
+        }
+
+    </script>
 @endsection

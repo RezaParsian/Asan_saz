@@ -23,7 +23,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('factor.update', $factor->id) }}">
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('factor.update', $factor->id) }}">
                 @csrf
                 @method("put")
                 <div class="form-group row">
@@ -108,8 +108,8 @@
                         <label>وضعیت پرداخت</label>
                         <select name="recive" id="recive" class="form-control">
                             <option value="-1">یک اپراتور انتخاب کنید</option>
-                            @foreach (['Yes',"No"] as $item)
-                                <option value="{{ $item }}">{{ $item=="Yes" ? "پرداخت شده" : "پرداخت نشده" }}</option>
+                            @foreach (['YES',"NO"] as $item)
+                                <option value="{{ $item }}">{{ $item=="YES" ? "پرداخت شده" : "پرداخت نشده" }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -157,7 +157,7 @@
                     <div class="col-md">
                         <label>وضعیت</label>
                         <select name="status" id="status" class="form-control">
-                            <option value="-1">یک اپراتور انتخاب کنید</option>
+                            <option value="-1">یک وضعیت انتخاب کنید</option>
                             @foreach (['waiting', 'doing', 'ready', 'sending', 'delivered', 'canceled user', 'canceled tuser'] as $item)
                                 <option value="{{ $item }}">{{ __($item) }}</option>
                             @endforeach
@@ -221,7 +221,7 @@
                     @foreach ($orders as $order)
                         <tr id="{{ $order->id }}">
                             <td>{{ $order->Product->title }}</td>
-                            <td>{{ $order->TaminKonande->name . ' ' . $order->TaminKonande->fname }}</td>
+                            <td>{{ (($order->TaminKonande->name) ?? "Not") . ' ' . (($order->TaminKonande->fname) ?? " Found") }}</td>
                             <td>{{ $order->count }}</td>
                             <td>{{ $order->price }}</td>
                             <td>{{ $order->sumprice }}</td>
@@ -249,7 +249,8 @@
 
 @section('ex-js')
     <script>
-        if({{Request()->is("closefactor/".$factor->id)}}){
+        var condition="{{Request()->is("closefactor/".$factor->id)}}";
+        if(condition==1){
             $("select:not(#status)").prop( "disabled", true );
             $("input:not([type=hidden],[type=submit])").prop( "disabled", true );
             $("button").addClass("d-none")
@@ -272,6 +273,20 @@
             }
 
             return false;
+        }
+
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
         }
     </script>
 @endsection

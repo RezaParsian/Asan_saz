@@ -44,7 +44,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('product.store') }}"
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('product.store') }}"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
@@ -166,6 +166,20 @@
                 $("#modalbody").html(data);
             });
 
+        }
+
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
         }
     </script>
 @endsection

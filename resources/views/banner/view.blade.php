@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('banner.update',$banner->id) }}" enctype="multipart/form-data">
+            <form class="col-md" method="POST" action="{{ route('banner.update',$banner->id) }}" onsubmit="return CheckSubmit()" enctype="multipart/form-data">
                 @csrf
                 @method("put")
                 <div class="form-group row">
@@ -112,6 +112,20 @@
         $("#show").val("{{$banner->show}}");
         $("#linkable").val("{{$banner->linkable}}");
     })
+
+    function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
+        }
     </script>
 
 @endsection

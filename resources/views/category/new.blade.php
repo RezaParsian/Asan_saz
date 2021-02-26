@@ -1,6 +1,6 @@
 @extends('layouts.master.master')
 
-@section('ex-title', 'ایجاد پسته بندی جدید')
+@section('ex-title', 'ایجاد دسته بندی جدید')
 
 @section('body')
     <div class="card">

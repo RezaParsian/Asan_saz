@@ -177,6 +177,10 @@ return [
         'province'              => 'استان',
         'slug'                  => 'نامک',
         'msg'                   => 'درخواست',
-        'code_meli'                   => 'کدملی'
+        'code_meli'                   => 'کدملی',
+        'status'=>"وضعیت",
+        'statusroll.*'=>"وضعیت",
+        'recive'=>"وضعیت پرداخت",
+        'reciveroll.*'=>"وضعیت پرداخت",
     ],
 ];

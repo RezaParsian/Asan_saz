@@ -8,6 +8,7 @@ use App\Models\Factor;
 use App\Models\Order;
 use App\Models\Timing;
 use App\Models\User;
+use Hekmatinasser\Verta\Facades\Verta;
 use Illuminate\Http\Request;
 
 class CloseFactorController extends Controller
@@ -20,6 +21,16 @@ class CloseFactorController extends Controller
     public function index(Request $request)
     {
         $q = "%" . $request->q . "%";
+
+        $datebetween = [];
+        $start = explode("-", $request->start_date);
+        $start = count($start) > 1 ? implode("-", Verta::getGregorian($start[0], $start[1], $start[2])) : date("Y-m-d", strtotime("-365 day"));
+        array_push($datebetween, $start);
+        $end = explode("-", $request->end_date);
+        $end = count($end) > 1 ? implode("-", Verta::getGregorian($end[0], $end[1], $end[2])) : date("Y-m-d", strtotime("+365 day"));
+        array_push($datebetween, $end);
+        $roll=isset($request->roll) ? "('".$request->roll."')" :"('delivered','canceled user','canceled tuser')";
+
         $search = [
             "open" => "NOT IN",
             "close" => "IN"
@@ -31,7 +42,8 @@ class CloseFactorController extends Controller
             ])->orwhere([
                 ["fname", "like", $q]
             ]);
-        })->whereRaw("status " . $search[$request->type ?? "close"] . " ('delivered','canceled user','canceled tuser')")
+        })->whereRaw("status " . $search[$request->type ?? "close"] . " $roll")
+        ->whereBetween("created_at", $datebetween)
             ->orderby("id", "desc")->orwhere([["id", $request->q]])->paginate(25);
 
         return view("factor.list", compact("factors"));

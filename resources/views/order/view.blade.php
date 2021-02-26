@@ -20,7 +20,7 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('orders.update', $order->id) }}">
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('orders.update', $order->id) }}">
                 @csrf
                 @method("put")
 
@@ -93,5 +93,18 @@
             $("#tuserID").val(taminkonande);
         });
 
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
+        }
     </script>
 @endsection

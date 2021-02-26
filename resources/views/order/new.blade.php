@@ -43,15 +43,16 @@
                     </ul>
                 </div>
             @endif
-            <form class="col-md" method="POST" action="{{ route('orders.store') }}">
+            <form onsubmit="return CheckSubmit()" class="col-md" method="POST" action="{{ route('orders.store') }}">
                 @csrf
                 <input type="hidden" name="factorID" value="{{ Request()->factorID }}">
                 <input type="hidden" name="status" value="waiting">
                 <input type="hidden" name="userID" value="{{ Request()->userID }}">
                 <div class="form-group row">
                     <div class="col-md">
-                        <label onclick="ChangeCat(0)" id="CategoryID" data-toggle="modal"
-                            data-target="#catmodal">محصول</label>
+                        <label>محصول</label>
+                        <button type="button" onclick="ChangeCat(0)" id="CategoryID" data-toggle="modal"
+                        data-target="#catmodal" class="btn btn-outline-warning float-right p-2">فیلتر</button>
                         <select name="productID" id="productID" class="form-control">
                             <option value="-1">یک محصول انتخاب کنید</option>
                             @foreach ($proeudcts as $item)
@@ -143,6 +144,18 @@
             });
 
         }
-
+        function CheckSubmit() {
+            var result=true;
+            $("select").each(function() {
+                if ($(this).val() == -1) {
+                    $(this).focus();
+                    $("#notvalid").remove();
+                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
+                    result=false;
+                    return;
+                }
+            })
+            return result;
+        }
     </script>
 @endsection

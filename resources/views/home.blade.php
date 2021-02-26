@@ -9,7 +9,7 @@
         </div>
         <div class="col-md-12 d-flex">
             <div class="card border m-1 col">
-                <a href="{{route("factor.index")}}">
+                <a href="{{route("factor.index")}}?roll=waiting">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <div>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="card border m-1 col">
-                <a href="{{route("factor.index")}}">
+                <a href="{{route("factor.index")}}?roll=doing">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <div>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="card border m-1 col">
-                <a href="{{route("factor.index")}}">
+                <a href="{{route("factor.index")}}?roll=ready">
                     <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <div>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-12 d-flex">
             <div class="card border m-1 col">
-                <a href="{{route("factor.index")}}">
+                <a href="{{route("factor.index")}}?roll=sending">
                     <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <div>
@@ -92,7 +92,7 @@
             </div>
 
             <div class="card border m-1 col">
-                <a href="{{ route('closefactor.index') }}">
+                <a href="{{ route('closefactor.index')}}?roll=delivered">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div>
@@ -113,7 +113,7 @@
             </div>
 
             <div class="card border m-1 col">
-                <a href="{{ route('closefactor.index') }}">
+                <a href="{{ route('closefactor.index') }}?roll=canceled user">
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <div>
@@ -137,7 +137,7 @@
         <div class="col-md-12 d-flex">
 
             <div class="card border m-1 col">
-                    <a href="{{route("closefactor.index")}}">
+                    <a href="{{route("closefactor.index")}}?roll=canceled tuser">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
                         <div>
