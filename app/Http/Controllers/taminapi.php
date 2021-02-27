@@ -11,24 +11,32 @@ class taminapi extends Controller
 {
     public function Login(Request $request)
     {
-        $user = User::where("email",$request->user)->get();
-        $a= $user[0]->makeVisible(["password"]);
+        $user = User::where("email", $request->user)->get();
+
+        if (count($user)>0) {
+            $a = $user[0]->makeVisible(["password"]);
+        } else {
+            return [
+                "status" => "false",
+                "msg" => "user or password is incorrect"
+            ];
+        }
 
         if (Hash::check($request->password, $a['password'])) {
             return [
-                "status"=>"true",
-                "msg"=>"user authentication is valid",
-                "user"=>$user->makeHidden(["password"])->first()
+                "status" => "true",
+                "msg" => "user authentication is valid",
+                "user" => $user->makeHidden(["password"])->first()
             ];
-        }else{
+        } else {
             return [
-                "status"=>"false",
-                "msg"=>"user or password is incorrect"
+                "status" => "false",
+                "msg" => "user or password is incorrect"
             ];
         }
     }
 
-    public function Info(Request $request,User $user)
+    public function Info(Request $request, User $user)
     {
         $time = new Verta();
         $now = $time->formatWord('l ') . $time->format('%d %B %Y');
