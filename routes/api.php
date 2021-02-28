@@ -82,5 +82,8 @@ Route::group(['prefix' => 'ajax'], function () {
 
 Route::prefix('tamin')->group(function () {
     Route::post('login', [taminapi::class,"Login"]);
-    Route::get('info/{user}', [taminapi::class,"Info"]);
+
+    Route::middleware(["RpAuth"])->group(function () {
+        Route::get('info', [taminapi::class,"Info"]);
+    });
 });
