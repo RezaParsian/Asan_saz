@@ -85,5 +85,8 @@ Route::prefix('tamin')->group(function () {
 
     Route::middleware(["RpAuth"])->group(function () {
         Route::get('info', [taminapi::class,"Info"]);
+        Route::get('products',[taminapi::class,"Products"]);
+        Route::put('updateproduct/{product}',[taminapi::class,"UpdateProduct"]);
+        Route::get("factor",[taminapi::class,"Factor"]);
     });
 });
