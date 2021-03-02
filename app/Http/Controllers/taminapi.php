@@ -16,7 +16,7 @@ class taminapi extends Controller
 {
     public function Login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->user, 'password' => $request->password])) {
+        if (Auth::attempt(['phone' => $request->user, 'password' => $request->password])) {
             $musthash = Auth::user()->id . date("Y-m-d H:i:S") . Auth::user()->roll;
             $remember_token = remember_token::updateOrCreate(["userID" => Auth::user()->id], ["token" => Hash::make($musthash)]);
             return [
@@ -69,5 +69,15 @@ class taminapi extends Controller
             "order" => function ($query) use ($user) {
                 $query->where("tuserID", $user->id);
             },"Address","User","Timing","Operator","Peyk"])->orderby("id","asc")->get();
+    }
+
+    public function UpdateState(Request $request)
+    {
+        $user = $request->user;
+        $user->update(["state"=>$request->state]);
+        $user->Product()->update(["show"=>$request->state=="Out" ? "No" : "Yes"]);
+        return [
+            "message"=>"وضعیت شما با موفقیت تغیر کرد"
+        ];
     }
 }
