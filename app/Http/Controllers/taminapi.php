@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Factor;
 use App\Models\Product as ModelsProduct;
 use App\Models\remember_token;
 use App\Models\User;
@@ -54,7 +55,7 @@ class taminapi extends Controller
 
     public function UpdateProduct(Request $request, ModelsProduct $product)
     {
-        $newdata=json_decode($request->getContent(),true);
+        $newdata = json_decode($request->getContent(), true);
         $product->update($newdata);
         return $product;
     }
@@ -62,5 +63,11 @@ class taminapi extends Controller
     public function Factor(Request $request)
     {
         $user = $request->user;
+        return Factor::wherehas("Order", function ($query) use ($user) {
+            $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
+        })->with([
+            "order" => function ($query) use ($user) {
+                $query->where("tuserID", $user->id);
+            },"Address","User","Timing","Operator","Peyk"])->orderby("id","asc")->get();
     }
 }

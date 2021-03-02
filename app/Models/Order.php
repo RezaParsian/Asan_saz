@@ -21,7 +21,7 @@ class Order extends Model
 
     public function Product()
     {
-        return $this->hasOne(Product::class,"id","productID");
+        return $this->hasOne(Product::class,"id","productID")->with("Category");
     }
 
     public function TaminKonande()

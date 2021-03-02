@@ -64,6 +64,16 @@ class Factor extends Model
         return $this->hasOne(User::class, "id", "userID");
     }
 
+    public function Operator()
+    {
+        return $this->hasOne(User::class, "id", "ouserID");
+    }
+
+    public function Peyk()
+    {
+        return $this->hasOne(User::class, "id", "puserID");
+    }
+
     public function Timing()
     {
         return $this->hasOne(Timing::class, "id", "timingID");
