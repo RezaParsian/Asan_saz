@@ -65,7 +65,7 @@
                     <div class="col-md">
                         <label>تامین کننده</label>
                         <select name="tuserID" id="tuserID" class="form-control">
-                            <option value="-1">یک اپراتور انتخاب کنید</option>
+                            <option value="-1">یک تامین انتخاب کنید</option>
                             @foreach ($users as $item)
                                 <option value="{{ $item->id }}">{{ $item->name . ' ' . $item->fname }}</option>
                             @endforeach

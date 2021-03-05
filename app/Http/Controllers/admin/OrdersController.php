@@ -63,7 +63,10 @@ class OrdersController extends Controller
     public function show(Order $order)
     {
         $proeudcts = Product::where([["show", "Yes"]])->get();
-        $users=$order->Product->action=="one_click" ? Service::where("productID",$order->productID)->get()->unique(("userID")) : User::where("roll", "Supplier")->get();
+        $users=$order->Product->action=="one_click" ? Service::where("productID",$order->productID)
+        ->wherehas("user",function($query){
+            $query->where("roll","Supplier")->wherein("state",["Ready","Working"]);
+        })->get()->unique(("userID")) : User::where("roll", "Supplier")->wherein("state",["Ready","Working"])->get();
         return view("order.view", compact("order", "proeudcts", "users"));
     }
 
