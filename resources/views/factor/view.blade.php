@@ -48,7 +48,7 @@
                         <label>تامین کننده</label>
                         <select name="tuserID" id="tuserID" class="form-control">
                             <option value="-1">یک تامین کننده انتخاب کنید</option>
-                            @foreach ($users->where('roll', 'Supplier') as $item)
+                            @foreach ($users->where('roll', 'Supplier')->wherein("state",["Ready","Working"])  as $item)
                                 <option value="{{ $item->id }}">{{ $item->name . ' ' . $item->fname }}</option>
                             @endforeach
                         </select>
@@ -273,20 +273,6 @@
             }
 
             return false;
-        }
-
-        function CheckSubmit() {
-            var result=true;
-            $("select").each(function() {
-                if ($(this).val() == -1) {
-                    $(this).focus();
-                    $("#notvalid").remove();
-                    $(this).after("<p id='notvalid' class='small text-danger'>لطفا یک گزینه معتبر انتخاب فرمایید<p>")
-                    result=false;
-                    return;
-                }
-            })
-            return result;
         }
     </script>
 @endsection
