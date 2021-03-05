@@ -78,6 +78,7 @@ Route::resource('admin', AdminstuffController::class);
 Route::group(['prefix' => 'ajax'], function () {
     Route::get('/{id}', [ajax::class, "GetCategoryByID"]);
     Route::get('/name/{id}', [ajax::class, "GetCategoryNameByID"]);
+    Route::get('/parent/{id}', [ajax::class, "GetParent"]);
 });
 
 Route::prefix('tamin')->group(function () {
