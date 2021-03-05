@@ -32,7 +32,12 @@ class Factor extends Model
         "bale",
     ];
 
-    protected $appends = ['Rddate'];
+    protected $appends = ['Rddate', "sumprice"];
+
+    public function getsumpriceAttribute()
+    {
+        return $this->Order()->sum("sumprice") ?? 0;
+    }
 
     public function getRddateAttribute()
     {

@@ -56,43 +56,72 @@ class taminapi extends Controller
 
     public function UpdateProduct(Request $request, ModelsProduct $product)
     {
-        if($product->tuserID==$request->user->id){
+        if ($product->tuserID == $request->user->id) {
             $newdata = json_decode($request->getContent(), true);
             Productlog::create([
-                "userID"=>$request->user->id,
-                "productID"=>$product->id,
-                "buyprice_old"=>$product->buyprice,
-                "buyprice_new"=>!empty($request->buyprice) ? $request->buyprice : $product->buyprice,
-                "price_old"=>$product->price,
-                "price_new"=>!empty($request->price) ? $request->price : $product->price,
-                "show_old"=>$product->show,
-                "show_new"=> !empty($request->show) ? $request->show : $product->show,
+                "userID" => $request->user->id,
+                "productID" => $product->id,
+                "buyprice_old" => $product->buyprice,
+                "buyprice_new" => !empty($request->buyprice) ? $request->buyprice : $product->buyprice,
+                "price_old" => $product->price,
+                "price_new" => !empty($request->price) ? $request->price : $product->price,
+                "show_old" => $product->show,
+                "show_new" => !empty($request->show) ? $request->show : $product->show,
             ]);
             $product->update($newdata);
             return $product;
-    }else{
-            abort(403,"This is not your product");
+        } else {
+            abort(403, "This is not your product");
         }
     }
 
     public function Factor(Request $request)
     {
         $user = $request->user;
-        return Factor::wherehas("Order", function ($query) use ($user) {
+        $result=Factor::wherehas("Order", function ($query) use ($user) {
             $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
         })->with([
             "order" => function ($query) use ($user) {
                 $query->where("tuserID", $user->id);
-            },"Address","User","Timing","Operator","Peyk"])->orderby("id","asc")->get();
+            },
+            "user"
+        ])->orderby("id", "asc")->get();
+
+        return $result;
     }
+
+    // public function Factor(Request $request)
+    // {
+    //     $user = $request->user;
+    //     return Factor::wherehas("Order", function ($query) use ($user) {
+    //         $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
+    //     })->with([
+    //         "order" => function ($query) use ($user) {
+    //             $query->where("tuserID", $user->id);
+    //         },"Address","User","Timing","Operator","Peyk"])->orderby("id","asc")->get();
+    // }
 
     public function UpdateState(Request $request)
     {
         $user = $request->user;
-        $user->update(["state"=>$request->state]);
-        $user->Product()->update(["show"=>$request->state=="Out" ? "No" : "Yes"]);
+        $user->update(["state" => $request->state]);
+        $user->Product()->update(["show" => $request->state == "Out" ? "No" : "Yes"]);
         return [
-            "message"=>"وضعیت شما با موفقیت تغیر کرد"
+            "message" => "وضعیت شما با موفقیت تغیر کرد"
         ];
+    }
+
+    public function UserInfo(User $user)
+    {
+        return $user;
+    }
+
+    public function Rate(Request $request,Factor $factor)
+    {
+        $factor->update([
+            "rate"=>$request->rate
+        ]);
+
+        return $factor;
     }
 }
