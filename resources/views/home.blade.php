@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <h5>سفارشات</h5>
         </div>
-        <div class="col-md-12 d-flex">
+        <div class="col-md-12 d-md-flex">
             <div class="card border m-1 col">
                 <a href="{{route("factor.index")}}?roll=waiting">
                 <div class="card-body">
@@ -70,7 +70,7 @@
             </div>
 
         </div>
-        <div class="col-md-12 d-flex">
+        <div class="col-md-12 d-md-flex">
             <div class="card border m-1 col">
                 <a href="{{route("factor.index")}}?roll=sending">
                     <div class="card-body">
@@ -134,7 +134,7 @@
             </a>
         </div>
 
-        <div class="col-md-12 d-flex">
+        <div class="col-md-12 d-md-flex">
 
             <div class="card border m-1 col">
                     <a href="{{route("closefactor.index")}}?roll=canceled tuser">
@@ -164,7 +164,7 @@
         <div class="col-md-12">
             <h5>کاربران</h5>
         </div>
-        <div class="col-md-12 d-flex">
+        <div class="col-md-12 d-md-flex">
             <div class="card border m-1 col">
                 <div class="card-body">
                     <div class="d-flex align-items-center mb-3">
