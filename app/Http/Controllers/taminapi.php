@@ -84,7 +84,7 @@ class taminapi extends Controller
             "order" => function ($query) use ($user) {
                 $query->where("tuserID", $user->id);
             },
-            "user"
+            "user","timing"
         ])->orderby("id", "asc")->get();
 
         return $result;
@@ -109,11 +109,6 @@ class taminapi extends Controller
         return [
             "message" => "وضعیت شما با موفقیت تغیر کرد"
         ];
-    }
-
-    public function UserInfo(User $user)
-    {
-        return $user;
     }
 
     public function Rate(Request $request,Factor $factor)

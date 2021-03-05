@@ -42,7 +42,7 @@ Route::group(['prefix' => ''], function () {
     Route::post('/Setting', [SettingController::class, "Fetch"])->name("api-fetchsetting");
     Route::post('/Product', [ProductController::class, "Fetch"])->name("api-fetchproduct");
     Route::Post('/Category', [CategoryController::class, "Fetch"])->name("api-fetchscategory");
-
+    Route::put('rate/{factor}', [taminapi::class,"Rate"]);
     Route::match(['get', 'post'], '/AllConfig', function () {
         $time = new Verta();
         $now = $time->formatWord('l ') . $time->format('%d %B %Y');
@@ -90,7 +90,5 @@ Route::prefix('tamin')->group(function () {
         Route::put('updateproduct/{product}',[taminapi::class,"UpdateProduct"]);
         Route::get("factor",[taminapi::class,"Factor"]);
         Route::put("updatestate",[taminapi::class,"UpdateState"]);
-        Route::get('userinfo/{user}', [taminapi::class,"UserInfo"]);
-        Route::put('rate/{factor}', [taminapi::class,"Rate"]);
     });
 });

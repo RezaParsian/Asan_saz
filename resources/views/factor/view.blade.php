@@ -36,7 +36,7 @@
                         <label>اپراتور</label>
                         <select name="ouserID" id="ouserID" class="form-control">
                             <option value="-1">یک اپراتور انتخاب کنید</option>
-                            @foreach ($users->where('roll', 'Operator') as $item)
+                            @foreach ($users->where('roll', 'Operator')->wherein("state",["Ready","Working"]) as $item)
                                 <option value="{{ $item->id }}">{{ $item->name . ' ' . $item->fname }}</option>
                             @endforeach
                         </select>
@@ -57,7 +57,7 @@
                         <label>{{__("Delivery")}}</label>
                         <select name="puserID" id="puserID" class="form-control">
                             <option value="-1">یک پیک انتخاب کنید</option>
-                            @foreach ($users->where('roll', 'Delivery') as $item)
+                            @foreach ($users->where('roll', 'Delivery')->wherein("state",["Ready","Working"]) as $item)
                                 <option value="{{ $item->id }}">{{ $item->name . ' ' . $item->fname }}</option>
                             @endforeach
                         </select>

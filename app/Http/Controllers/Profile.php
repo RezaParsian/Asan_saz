@@ -37,7 +37,7 @@ class Profile extends Controller
      */
     public function show($id)
     {
-        $user=User::findOrFail($id)->only(["name","fname","whatsapp"]);
+        $user=User::findOrFail($id);
         return $user;
     }
 
