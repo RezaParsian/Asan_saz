@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Factor;
 use App\Models\Product as ModelsProduct;
+use App\Models\Productlog;
 use App\Models\remember_token;
 use App\Models\User;
 use Database\Seeders\product;
@@ -55,9 +56,23 @@ class taminapi extends Controller
 
     public function UpdateProduct(Request $request, ModelsProduct $product)
     {
-        $newdata = json_decode($request->getContent(), true);
-        $product->update($newdata);
-        return $product;
+        if($product->tuserID==$request->user->id){
+            $newdata = json_decode($request->getContent(), true);
+            Productlog::create([
+                "userID"=>$request->user->id,
+                "productID"=>$product->id,
+                "buyprice_old"=>$product->buyprice,
+                "buyprice_new"=>!empty($request->buyprice) ? $request->buyprice : $product->buyprice,
+                "price_old"=>$product->price,
+                "price_new"=>!empty($request->price) ? $request->price : $product->price,
+                "show_old"=>$product->show,
+                "show_new"=> !empty($request->show) ? $request->show : $product->show,
+            ]);
+            $product->update($newdata);
+            return $product;
+    }else{
+            abort(403,"This is not your product");
+        }
     }
 
     public function Factor(Request $request)
