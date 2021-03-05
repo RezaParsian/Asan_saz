@@ -60,15 +60,15 @@
             @endphp
             <ul class="pagination justify-content-center">
                 <li class="page-item {{ $factors->currentPage() == 1 ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ route('factor.index') }}/?page={{ $factors->currentPage() - 1}}{{$param}}" tabindex="-1"
+                    <a class="page-link" href="{{ Request()->is("factor") ? route('factor.index') : route('closefactor.index') }}/?page={{ $factors->currentPage() - 1}}{{$param}}" tabindex="-1"
                         aria-disabled="true">قبلی</a>
                 </li>
                 @for ($i = 1; $i <= $factors->lastPage(); $i++)
                     <li class="page-item {{ $factors->currentPage() == $i ? 'active' : '' }}"><a class="page-link"
-                            href="{{ route('factor.index') }}/?page={{ $i}}{{$param}}">{{ $i }}</a></li>
+                            href="{{ Request()->is("factor") ? route('factor.index') : route('closefactor.index') }}/?page={{ $i}}{{$param}}">{{ $i }}</a></li>
                 @endfor
                 <li class="page-item {{ $factors->currentPage() == $factors->lastPage() ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ route('factor.index') }}/?page={{ $factors->currentPage() + 1}}{{$param}}">بعدی</a>
+                    <a class="page-link" href="{{ Request()->is("factor") ? route('factor.index') : route('closefactor.index') }}/?page={{ $factors->currentPage() + 1}}{{$param}}">بعدی</a>
                 </li>
             </ul>
         </nav>
