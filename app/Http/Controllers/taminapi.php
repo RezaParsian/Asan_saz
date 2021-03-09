@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Factor;
+use App\Models\Order;
 use App\Models\Product as ModelsProduct;
 use App\Models\Productlog;
 use App\Models\remember_token;
@@ -78,16 +79,31 @@ class taminapi extends Controller
     public function Factor(Request $request)
     {
         $user = $request->user;
-        $result=Factor::wherehas("Order", function ($query) use ($user) {
+        $result = Factor::wherehas("Order", function ($query) use ($user) {
             $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
         })->with([
             "order" => function ($query) use ($user) {
-                $query->where("tuserID", $user->id);
+                $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
             },
-            "user","timing"
+            "user", "timing"
         ])->orderby("id", "asc")->get();
 
-        return $result;
+        $newlist = [];
+
+        foreach ($result as $item) {
+            $sumprice = 0;
+            $sumkala = 0;
+            foreach ($item->order as $order) {
+                $sumprice += $order->sumprice;
+                $sumkala += $order->count;
+            }
+            $a = $item->toArray();
+            $a = array_merge($a, ["sumprice" => $sumprice, "sumkala" => $sumkala]);
+
+            array_push($newlist, $a);
+        }
+
+        return $newlist;
     }
 
     // public function Factor(Request $request)
@@ -101,6 +117,9 @@ class taminapi extends Controller
     //         },"Address","User","Timing","Operator","Peyk"])->orderby("id","asc")->get();
     // }
 
+    //
+    //change status of product and user
+    //
     public function UpdateState(Request $request)
     {
         $user = $request->user;
@@ -111,12 +130,126 @@ class taminapi extends Controller
         ];
     }
 
-    public function Rate(Request $request,Factor $factor)
+    public function Rate(Request $request, Factor $factor)
     {
         $factor->update([
-            "rate"=>$request->rate
+            "rate" => $request->rate
         ]);
 
         return $factor;
+    }
+
+    public function FactorDetail(Request $request, $factor)
+    {
+        $userl = $request->user;
+        $result = Factor::where("id", "$factor")
+            ->wherehas("Order", fn ($query) => $query->where("tuserID", $userl->id))
+            ->get();
+        // return $result[0];
+        $products = [];
+        foreach ($result[0]->Order as $product) {
+            array_push($products, [
+                "title" => $product->Product->title ?? null,
+                "category" => $product->Product->Category->title ?? null,
+                "sumprice" => $product->sumprice ?? null,
+                "img" => $product->Product->img ?? null,
+            ]);
+        }
+
+        $user = [
+            "name" => $result[0]->User->name ?? null,
+            "fname" => $result[0]->User->fname ?? null,
+            "phone" => $result[0]->User->phone ?? null,
+            "whatsapp" => $result[0]->User->whatsapp ?? null,
+            "img" => $result[0]->User->img ?? null,
+        ];
+
+        $operator = [
+            "name" => $result[0]->Operator->name ?? null,
+            "fname" => $result[0]->Operator->fname ?? null,
+            "phone" => $result[0]->Operator->phone ?? null,
+            "whatsapp" => $result[0]->Operator->whatsapp ?? null,
+            "img" => $result[0]->Operator->img ?? null,
+        ];
+
+        $tamin = [
+            "name" => $userl->name ?? null,
+            "fname" => $userl->fname ?? null,
+            "phone" => $userl->phone ?? null,
+            "whatsapp" => $userl->whatsapp ?? null,
+            "img" => $userl->img ?? null,
+        ];
+
+        $peyk = [
+            "name" => $result[0]->peyk->name ?? null,
+            "fname" => $result[0]->peyk->fname ?? null,
+            "phone" => $result[0]->peyk->phone ?? null,
+            "whatsapp" => $result[0]->peyk->whatsapp ?? null,
+            "img" => $result[0]->peyk->img ?? null,
+        ];
+
+        $address = $result[0]->Address;
+        $timing = $result[0]->Timing;
+
+        $result = $result[0]->toArray();
+
+        $result = array_merge($result, [
+            "products" => $products,
+            "user" => $user,
+            "operator" => $operator,
+            "taminkonande" => $tamin,
+            "peyk" => $peyk,
+            "address" => $address,
+            "timing" => $timing,
+        ]);
+
+        return $result;
+    }
+
+    public function Doing(Request $request, Factor $factor)
+    {
+        $user = $request->user;
+
+        $factor->update([
+            "status" => "doing",
+        ]);
+
+        Order::where([
+            ["factorID", $factor->id],
+            ["tuserID", $user->id],
+        ])->update([
+            "status" => "doing"
+        ]);
+
+        return [
+            "msg" => "وضعیت با موفقیت تغیر یافت."
+        ];
+    }
+
+    public function OrderStatus(Request $request, Factor $factor)
+    {
+        $user = $request->user;
+
+        Order::where([
+            ["factorID", $factor->id],
+            ["tuserID", $user->id],
+        ])->update([
+            "status" => $request->status
+        ]);
+
+        $fk = Order::where([
+            ["factorID", $factor->id],
+            ["status", "!=", $request->status]
+        ])->get()->count();
+
+        if ($fk == 0) {
+            $factor->update([
+                "status" => $request->status
+            ]);
+        }
+
+        return [
+            "msg" => "وضعیت با موفقیت تغیر یافت."
+        ];
     }
 }

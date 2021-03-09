@@ -90,5 +90,8 @@ Route::prefix('tamin')->group(function () {
         Route::put('updateproduct/{product}',[taminapi::class,"UpdateProduct"]);
         Route::get("factor",[taminapi::class,"Factor"]);
         Route::put("updatestate",[taminapi::class,"UpdateState"]);
+        Route::get("factordetail/{factor}",[taminapi::class,"FactorDetail"]);
+        Route::get('doing/{factor}',[taminapi::class,"Doing"]);
+        Route::post('orderstatus/{factor}',[taminapi::class,"OrderStatus"]);
     });
 });
