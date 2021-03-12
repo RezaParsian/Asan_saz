@@ -68,6 +68,10 @@ class Factor extends Model
     {
         return $this->hasOne(User::class, "id", "ouserID");
     }
+    public function Tamin()
+    {
+        return $this->hasOne(User::class, "id", "tuserID");
+    }
 
     public function Peyk()
     {

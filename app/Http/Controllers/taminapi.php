@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product as ModelsProduct;
 use App\Models\Productlog;
 use App\Models\remember_token;
+use App\Models\state_logs;
 use App\Models\User;
 use Database\Seeders\product;
 use Hekmatinasser\Verta\Verta;
@@ -86,7 +87,7 @@ class taminapi extends Controller
                 $query->where("tuserID", $user->id)->whereRaw("status in ('waiting','doing','ready','sending')");
             },
             "user", "timing"
-        ])->orderby("id", "asc")->get();
+        ])->orderby("Rddate", "asc")->get();
 
         $newlist = [];
 
@@ -95,7 +96,7 @@ class taminapi extends Controller
             $sumkala = 0;
             foreach ($item->order as $order) {
                 $sumprice += $order->sumprice;
-                $sumkala += $order->count;
+                $sumkala++;
             }
             $a = $item->toArray();
             $a = array_merge($a, ["sumprice" => $sumprice, "sumkala" => $sumkala]);
@@ -123,6 +124,11 @@ class taminapi extends Controller
     public function UpdateState(Request $request)
     {
         $user = $request->user;
+        state_logs::create([
+            "userid"=>$user->id,
+            "state_old"=>$user->state,
+            "state_new"=>$request->state,
+        ]);
         $user->update(["state" => $request->state]);
         $user->Product()->update(["show" => $request->state == "Out" ? "No" : "Yes"]);
         return [
@@ -143,7 +149,9 @@ class taminapi extends Controller
     {
         $userl = $request->user;
         $result = Factor::where("id", "$factor")
-            ->wherehas("Order", fn ($query) => $query->where("tuserID", $userl->id))
+            ->with(["Order"=> function ($query) use($userl){
+                $query->where("tuserID", $userl->id);
+            }])
             ->get();
         // return $result[0];
         $products = [];

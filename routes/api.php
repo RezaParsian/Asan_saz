@@ -5,7 +5,9 @@ use App\Http\Controllers\AdminstuffController;
 use App\Http\Controllers\ajax;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\operator;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\peyk;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Profile;
 use App\Http\Controllers\RegionController;
@@ -14,6 +16,7 @@ use App\Http\Controllers\SmsController;
 use App\Http\Controllers\taminapi;
 use App\Http\Controllers\TimingController;
 use App\Http\Helper\Rp76;
+use App\Models\Factor;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Hekmatinasser\Verta\Verta;
@@ -33,6 +36,8 @@ use PHPUnit\TextUI\XmlConfiguration\Group;
 |
 */
 
+Route::post('login', [taminapi::class, "Login"]);
+
 Route::group(['prefix' => ''], function () {
     Route::post('/SendSms', [SmsController::class, "SendSms"])->name("api-sendsms");
     Route::post('/MakeUser', [SmsController::class, "MakeUser"])->name("api-makeuser");
@@ -42,7 +47,15 @@ Route::group(['prefix' => ''], function () {
     Route::post('/Setting', [SettingController::class, "Fetch"])->name("api-fetchsetting");
     Route::post('/Product', [ProductController::class, "Fetch"])->name("api-fetchproduct");
     Route::Post('/Category', [CategoryController::class, "Fetch"])->name("api-fetchscategory");
-    Route::put('rate/{factor}', [taminapi::class,"Rate"]);
+
+    Route::put('location/{user}', function(User $user){
+        $user->update([
+            "location"=>Request()->location
+        ]);
+        return $user;
+    });
+
+    Route::put('rate/{factor}', [taminapi::class, "Rate"]);
     Route::match(['get', 'post'], '/AllConfig', function () {
         $time = new Verta();
         $now = $time->formatWord('l ') . $time->format('%d %B %Y');
@@ -82,16 +95,35 @@ Route::group(['prefix' => 'ajax'], function () {
 });
 
 Route::prefix('tamin')->group(function () {
-    Route::post('login', [taminapi::class,"Login"]);
-
     Route::middleware(["RpAuth"])->group(function () {
-        Route::get('info', [taminapi::class,"Info"]);
-        Route::get('products',[taminapi::class,"Products"]);
-        Route::put('updateproduct/{product}',[taminapi::class,"UpdateProduct"]);
-        Route::get("factor",[taminapi::class,"Factor"]);
-        Route::put("updatestate",[taminapi::class,"UpdateState"]);
-        Route::get("factordetail/{factor}",[taminapi::class,"FactorDetail"]);
-        Route::get('doing/{factor}',[taminapi::class,"Doing"]);
-        Route::post('orderstatus/{factor}',[taminapi::class,"OrderStatus"]);
+        Route::get('info', [taminapi::class, "Info"]);
+        Route::get('products', [taminapi::class, "Products"]);
+        Route::put('updateproduct/{product}', [taminapi::class, "UpdateProduct"]);
+        Route::get("factor", [taminapi::class, "Factor"]);
+        Route::put("updatestate", [taminapi::class, "UpdateState"]);
+        Route::get("factordetail/{factor}", [taminapi::class, "FactorDetail"]);
+        Route::get('doing/{factor}', [taminapi::class, "Doing"]);
+        Route::post('orderstatus/{factor}', [taminapi::class, "OrderStatus"]);
+    });
+});
+
+Route::prefix('operator')->group(function () {
+    Route::middleware(["RpAuth"])->group(function () {
+        Route::get("factor", [operator::class, "Factor"]);
+        Route::put("getfactor/{factor}", [operator::class, "GetFactor"]);
+        Route::get("factordetail/{factor}", [operator::class, "FactorDetail"]);
+        Route::put('peykrate/{factor}', [operator::class, "PeykRate"]);
+        Route::put('operatordes/{factor}', [operator::class, "OperatorDes"]);
+        Route::put('factorstatus/{factor}', [operator::class, "FactorStatus"]);
+        Route::put('paydetail/{factor}', [operator::class, "PayDetail"]);
+    });
+});
+
+Route::prefix('peyk')->group(function () {
+    Route::middleware(["RpAuth"])->group(function () {
+        Route::get("factor", [peyk::class, "Factor"]);
+        Route::get("factordetail/{factor}", [peyk::class, "FactorDetail"]);
+        Route::put("getfactor/{factor}", [peyk::class, "GetFactor"]);
+        Route::put("delevery/{factor}", [peyk::class, "Delevery"]);
     });
 });

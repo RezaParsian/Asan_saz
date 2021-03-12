@@ -14,7 +14,7 @@ class RegionController extends Controller
      */
     public function index()
     {
-        $region=region::orderby("id","desc")->get();
+        $region=region::orderby("id","asc")->get();
         return $region;
     }
 
